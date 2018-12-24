@@ -1,11 +1,9 @@
 package com.ikoval.libman.server.repository;
 
 import com.ikoval.libman.server.domain.Book;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.util.List;
+public interface BookRepository extends PagingAndSortingRepository<Book,Long> {
 
-public interface BookRepository extends Repository<Book,Long> {
 
-    List<Book> findAll();
 }
