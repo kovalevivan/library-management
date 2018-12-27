@@ -3,9 +3,17 @@ package com.ikoval.libman.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.*;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.ikoval.libman.client.domain.LibraryManagementClient;
+import com.ikoval.libman.client.domain.RestLibraryManagementClient;
+import com.ikoval.libman.client.ui.MainView;
+import com.ikoval.libman.client.ui.table.TableView;
+import com.ikoval.libman.shared.BookResponseDto;
 import com.ikoval.libman.shared.FieldVerifier;
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
+import java.util.List;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -22,7 +30,8 @@ public class MyWebApp implements EntryPoint {
   /**
    * Create a remote service proxy to talk to the server-side Greeting service.
    */
-  private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+  private final LibraryManagementClient libraryManagementClient = GWT.create(RestLibraryManagementClient.class);
+
 
   /**
    * This is the entry point method.
@@ -41,6 +50,7 @@ public class MyWebApp implements EntryPoint {
     RootPanel.get("nameFieldContainer").add(nameField);
     RootPanel.get("sendButtonContainer").add(sendButton);
     RootPanel.get("errorLabelContainer").add(errorLabel);
+    RootPanel.get().add(new TableView());
 
     // Focus the cursor on the name field when the app loads
     nameField.setFocus(true);
@@ -108,7 +118,33 @@ public class MyWebApp implements EntryPoint {
         sendButton.setEnabled(false);
         textToServerLabel.setText(textToServer);
         serverResponseLabel.setText("");
-        greetingService.greetServer(textToServer, new AsyncCallback<String>() {
+
+        RestLibraryManagementClient libraryManagementClient = GWT.create(RestLibraryManagementClient.class);
+
+        MethodCallback<List<BookResponseDto>> callback = new MethodCallback<List<BookResponseDto>>() {
+          @Override
+          public void onFailure(Method method, Throwable exception) {
+            dialogBox.setText("Remote Procedure Call - Failure");
+            serverResponseLabel.addStyleName("serverResponseLabelError");
+            serverResponseLabel.setHTML(SERVER_ERROR);
+            dialogBox.center();
+            closeButton.setFocus(true);
+          }
+
+          @Override
+          public void onSuccess(Method method, List<BookResponseDto> response) {
+            dialogBox.setText("Remote Procedure Call");
+            serverResponseLabel.removeStyleName("serverResponseLabelError");
+            serverResponseLabel.setHTML(response.toString());
+            dialogBox.center();
+            closeButton.setFocus(true);
+          }
+        };
+
+        libraryManagementClient.getAllBooks(callback);
+
+
+/*        greetingService.greetServer(textToServer, new AsyncCallback<String>() {
           public void onFailure(Throwable caught) {
             // Show the RPC error message to the user
             dialogBox.setText("Remote Procedure Call - Failure");
@@ -125,7 +161,7 @@ public class MyWebApp implements EntryPoint {
             dialogBox.center();
             closeButton.setFocus(true);
           }
-        });
+        });*/
       }
     }
 
