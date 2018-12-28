@@ -1,6 +1,5 @@
 package com.ikoval.libman.server.controller;
 
-import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.shared.BookResponseDto;
 import com.ikoval.libman.server.service.BookService;
 import lombok.AllArgsConstructor;
@@ -18,6 +17,10 @@ import java.util.List;
 public class LibraryManagementController {
 
     BookService bookService;
+
+    public LibraryManagementController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @GetMapping(value = "/bookswithpagination", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<BookResponseDto> getAllBooksWithPagination(@PageableDefault(sort = "id")Pageable pageable) {
