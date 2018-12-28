@@ -18,10 +18,6 @@ public class LibraryManagementController {
 
     BookService bookService;
 
-    public LibraryManagementController(BookService bookService) {
-        this.bookService = bookService;
-    }
-
     @GetMapping(value = "/bookswithpagination", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<BookResponseDto> getAllBooksWithPagination(@PageableDefault(sort = "id")Pageable pageable) {
         return bookService.getAllBooks(pageable);

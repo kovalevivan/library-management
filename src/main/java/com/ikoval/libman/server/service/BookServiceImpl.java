@@ -20,10 +20,6 @@ public class BookServiceImpl implements BookService {
 
     BookRepository repository;
 
-    public BookServiceImpl(BookRepository repository) {
-        this.repository = repository;
-    }
-
     @Override
     public Page<BookResponseDto> getAllBooks(Pageable pageable) {
         Page<Book> books = repository.findAll(pageable);
