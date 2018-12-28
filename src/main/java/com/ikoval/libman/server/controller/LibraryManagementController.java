@@ -36,12 +36,14 @@ public class LibraryManagementController {
     }
 
     @DeleteMapping(value = "/book/{id}")
-    public void deleteBook(@PathVariable Long id) {
-        bookService.delete(id);
+    public void deleteBookById(@PathVariable Long id) {
+        bookService.deleteById(id);
     }
 
-    @PostMapping(value = "/book/save")
-    public void saveBook(Book book) {
+    @PostMapping(value = "/book/save",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void saveBook(@RequestBody BookResponseDto book) {
         bookService.save(book);
     }
 }

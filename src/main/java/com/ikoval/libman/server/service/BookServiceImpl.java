@@ -45,13 +45,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         repository.deleteById(id);
     }
 
     @Override
-    public void save(Book book) {
-        repository.save(book);
+    public void save(BookResponseDto book) {
+        repository.save(BookConverter.converToBook(book));
     }
 
 

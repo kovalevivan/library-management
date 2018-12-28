@@ -14,7 +14,7 @@ public interface BookService {
 
     BookResponseDto getById(Long id);
 
-    void delete(Long id);
+    void deleteById(Long id);
 
-    void save(Book book);
+    void save(BookResponseDto book);
 }
