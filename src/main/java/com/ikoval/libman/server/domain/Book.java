@@ -11,7 +11,7 @@ import java.util.Objects;
 @Entity
 public class Book {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue
     private Long id;
     private String title;
     private String publisher;

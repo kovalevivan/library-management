@@ -17,7 +17,6 @@ import com.ikoval.libman.shared.dto.PageDto;
 import com.ikoval.libman.shared.dto.PageRequestDto;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +30,8 @@ public class BookTableView extends Composite {
     CellTable<BookDto> cellTable = new CellTable<>();
 
     SimplePager pager;
+
+    private final static int DEFAULT_PAGE_SIZE = 10;
 
     public BookTableView() {
         init();
@@ -175,7 +176,7 @@ public class BookTableView extends Composite {
     private void addPagination(CellTable<BookDto> table) {
         this.pager = new SimplePager();
         pager.setDisplay(table);
-        pager.setPageSize(3);
+        pager.setPageSize(DEFAULT_PAGE_SIZE);
     }
     
     public void saveBook(BookDto bookDto) {
