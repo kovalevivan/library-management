@@ -1,20 +1,19 @@
 package com.ikoval.libman.server.service;
 
-import com.ikoval.libman.server.domain.Book;
-import com.ikoval.libman.shared.BookResponseDto;
+import com.ikoval.libman.shared.dto.BookDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface BookService {
-    Page<BookResponseDto> getAllBooks(Pageable pageable);
+    Page<BookDto> getAllBooks(Pageable pageable);
 
-    List<BookResponseDto> getAllBooks();
+    List<BookDto> getAllBooks();
 
-    BookResponseDto getById(Long id);
+    BookDto getById(Long id);
 
     void deleteById(Long id);
 
-    void save(BookResponseDto book);
+    void save(BookDto book);
 }

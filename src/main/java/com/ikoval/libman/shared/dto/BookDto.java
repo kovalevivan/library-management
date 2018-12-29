@@ -1,8 +1,8 @@
-package com.ikoval.libman.shared;
+package com.ikoval.libman.shared.dto;
 
 import java.util.List;
 
-public class BookResponseDto {
+public class BookDto {
 
     private Long id;
     private String title;
@@ -13,7 +13,7 @@ public class BookResponseDto {
     private Integer pages;
     private String addedDate;
 
-    public BookResponseDto() {
+    public BookDto() {
     }
 
     public Long getId() {
@@ -82,7 +82,7 @@ public class BookResponseDto {
 
     @Override
     public String toString() {
-        return "BookResponseDto{" +
+        return "BookDto{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", publisher='" + publisher + '\'' +

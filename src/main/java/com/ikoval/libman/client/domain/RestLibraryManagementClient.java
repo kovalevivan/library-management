@@ -1,12 +1,11 @@
 package com.ikoval.libman.client.domain;
 
-import com.ikoval.libman.shared.BookResponseDto;
-import com.ikoval.libman.shared.MyPageImpl;
-import com.ikoval.libman.shared.PageableImpl;
+import com.ikoval.libman.shared.dto.BookDto;
+import com.ikoval.libman.shared.dto.PageDto;
+import com.ikoval.libman.shared.dto.PageRequestDto;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -19,12 +18,12 @@ public interface RestLibraryManagementClient extends LibraryManagementClient, Re
     @Override
     @GET
     @Path("/api/books")
-    void getAllBooks(MethodCallback<List<BookResponseDto>> callback);
+    void getAllBooks(MethodCallback<List<BookDto>> callback);
 
     @Override
     @POST
     @Path("/api/book/save")
-    void saveBook(BookResponseDto bookResponseDto, MethodCallback callback);
+    void saveBook(BookDto bookDto, MethodCallback callback);
 
     @Override
     @DELETE
@@ -32,7 +31,7 @@ public interface RestLibraryManagementClient extends LibraryManagementClient, Re
     void deleteBook(@PathParam("id") Long id, MethodCallback callback);
 
     @Override
-    @GET
+    @POST
     @Path("/api/bookswithpagination")
-    void getAllBooksWithPagination(PageableImpl pageable, MethodCallback<MyPageImpl<BookResponseDto>> callback);
+    void getAllBooksWithPagination(@RequestBody PageRequestDto pageable, MethodCallback<PageDto<BookDto>> callback);
 }

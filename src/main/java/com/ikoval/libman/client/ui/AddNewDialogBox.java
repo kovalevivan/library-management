@@ -6,7 +6,7 @@ import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.ui.Button;
-import com.ikoval.libman.shared.BookResponseDto;
+import com.ikoval.libman.shared.dto.BookDto;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class AddNewDialogBox extends DialogBox {
 
-    BookTableController bookTableController;
+    BookTableView bookTableView;
 
 
     VerticalPanel dialogVPanel = new VerticalPanel();
@@ -30,8 +30,8 @@ public class AddNewDialogBox extends DialogBox {
     TextBox yearOfPublish = new TextBox();
 
 
-    public AddNewDialogBox(BookTableController bookTableController) {
-        this.bookTableController = bookTableController;
+    public AddNewDialogBox(BookTableView bookTableView) {
+        this.bookTableView = bookTableView;
         setText("Add new Book");
         setAnimationEnabled(true);
 
@@ -68,20 +68,20 @@ public class AddNewDialogBox extends DialogBox {
         saveButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                BookResponseDto bookResponseDto = new BookResponseDto();
-                bookResponseDto.setId(Long.parseLong(id.getText()));
-                bookResponseDto.setTitle(title.getText());
-                bookResponseDto.setPages(Integer.parseInt(pages.getText()));
-                bookResponseDto.setPublisher(publisher.getText());
-                bookResponseDto.setYearOfPublishing(Integer.parseInt(yearOfPublish.getText()));
+                BookDto bookDto = new BookDto();
+                bookDto.setId(Long.parseLong(id.getText()));
+                bookDto.setTitle(title.getText());
+                bookDto.setPages(Integer.parseInt(pages.getText()));
+                bookDto.setPublisher(publisher.getText());
+                bookDto.setYearOfPublishing(Integer.parseInt(yearOfPublish.getText()));
                 List<String> authors = new ArrayList<>();
                 authors.add(author.getText());
-                bookResponseDto.setAuthors(authors);
+                bookDto.setAuthors(authors);
                 Date date = new Date();
                 DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
-                bookResponseDto.setAddedDate(dateTimeFormat.format(date));
-                Window.alert(bookResponseDto.toString());
-                bookTableController.saveBook(bookResponseDto);
+                bookDto.setAddedDate(dateTimeFormat.format(date));
+                Window.alert(bookDto.toString());
+                bookTableView.saveBook(bookDto);
                 hide();
             }
         });

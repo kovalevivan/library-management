@@ -1,11 +1,12 @@
 package com.ikoval.libman.server.controller;
 
-import com.ikoval.libman.shared.BookResponseDto;
+import com.ikoval.libman.server.converter.PageRequestConverter;
+import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.server.service.BookService;
+import com.ikoval.libman.shared.dto.PageRequestDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,19 +19,21 @@ public class LibraryManagementController {
 
     BookService bookService;
 
-    @GetMapping(value = "/bookswithpagination", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<BookResponseDto> getAllBooksWithPagination(@PageableDefault(sort = "id")Pageable pageable) {
-        return bookService.getAllBooks(pageable);
+    @PostMapping(value = "/bookswithpagination", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Page<BookDto> getAllBooksWithPagination(@RequestBody PageRequestDto pageRequestDto) {
+        PageRequest pageRequest = PageRequestConverter.convert(pageRequestDto);
+        Page<BookDto> page = bookService.getAllBooks(pageRequest);
+        return page;
     }
 
     @GetMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<BookResponseDto> getAllBooks() {
+    public List<BookDto> getAllBooks() {
         return bookService.getAllBooks();
     }
 
 
     @GetMapping(value = "/book/{id}")
-    public BookResponseDto getBook(@PathVariable Long id) {
+    public BookDto getBook(@PathVariable Long id) {
         return bookService.getById(id);
     }
 
@@ -42,7 +45,7 @@ public class LibraryManagementController {
     @PostMapping(value = "/book/save",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveBook(@RequestBody BookResponseDto book) {
+    public void saveBook(@RequestBody BookDto book) {
         bookService.save(book);
     }
 }

@@ -1,21 +1,21 @@
 package com.ikoval.libman.client.domain;
 
 
-import com.ikoval.libman.shared.BookResponseDto;
-import com.ikoval.libman.shared.MyPageImpl;
-import com.ikoval.libman.shared.PageableImpl;
+import com.ikoval.libman.shared.dto.BookDto;
+import com.ikoval.libman.shared.dto.PageDto;
+import com.ikoval.libman.shared.dto.PageRequestDto;
 import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.List;
 
 public interface LibraryManagementClient {
 
-    void getAllBooks(MethodCallback<List<BookResponseDto>> callback);
+    void getAllBooks(MethodCallback<List<BookDto>> callback);
 
-    void saveBook(BookResponseDto bookResponseDto, MethodCallback callback);
+    void saveBook(BookDto bookDto, MethodCallback callback);
 
     void deleteBook(Long id, MethodCallback callback);
 
-    void getAllBooksWithPagination(PageableImpl pageable, MethodCallback<MyPageImpl<BookResponseDto>> callback);
+    void getAllBooksWithPagination(PageRequestDto pageable, MethodCallback<PageDto<BookDto>> callback);
 
 }
