@@ -1,8 +1,8 @@
 package com.ikoval.libman.client.domain;
 
 import com.ikoval.libman.shared.dto.BookDto;
-import com.ikoval.libman.shared.dto.PageDto;
-import com.ikoval.libman.shared.dto.PageRequestDto;
+import com.ikoval.libman.shared.dto.MyPageResponse;
+import com.ikoval.libman.shared.dto.MyPageRequest;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,5 +33,5 @@ public interface RestLibraryManagementClient extends LibraryManagementClient, Re
     @Override
     @POST
     @Path("/api/bookswithpagination")
-    void getAllBooksWithPagination(@RequestBody PageRequestDto pageable, MethodCallback<PageDto<BookDto>> callback);
+    void getAllBooksWithPagination(@RequestBody MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
 }

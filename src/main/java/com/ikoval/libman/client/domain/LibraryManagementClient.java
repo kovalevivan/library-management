@@ -2,8 +2,8 @@ package com.ikoval.libman.client.domain;
 
 
 import com.ikoval.libman.shared.dto.BookDto;
-import com.ikoval.libman.shared.dto.PageDto;
-import com.ikoval.libman.shared.dto.PageRequestDto;
+import com.ikoval.libman.shared.dto.MyPageResponse;
+import com.ikoval.libman.shared.dto.MyPageRequest;
 import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.List;
@@ -16,6 +16,6 @@ public interface LibraryManagementClient {
 
     void deleteBook(Long id, MethodCallback callback);
 
-    void getAllBooksWithPagination(PageRequestDto pageable, MethodCallback<PageDto<BookDto>> callback);
+    void getAllBooksWithPagination(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
 
 }

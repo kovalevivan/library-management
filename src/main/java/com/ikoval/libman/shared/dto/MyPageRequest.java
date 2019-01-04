@@ -2,15 +2,16 @@ package com.ikoval.libman.shared.dto;
 
 
 
-public class PageRequestDto {
+public class MyPageRequest {
 
 
+    private Integer start;
     private Integer page = 0;
-    private Integer size = 100;
-    String direction;
-    String property;
+    private Integer size = 4;
+    private String direction;
+    private String property;
 
-    public PageRequestDto() {
+    public MyPageRequest() {
     }
 
     public String getDirection() {
@@ -43,5 +44,13 @@ public class PageRequestDto {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+
+    public Integer getStart() {
+        return start;
+    }
+
+    public void setStart(Integer start) {
+        this.start = start;
     }
 }

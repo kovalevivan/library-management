@@ -9,7 +9,7 @@ public class BookDto {
     private String publisher;
     private Integer yearOfPublishing;
     private List<String> genres;
-    private List<String> authors;
+    private String authors;
     private Integer pages;
     private String addedDate;
 
@@ -56,11 +56,11 @@ public class BookDto {
         this.genres = genres;
     }
 
-    public List<String> getAuthors() {
+    public String getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<String> authors) {
+    public void setAuthors(String authors) {
         this.authors = authors;
     }
 

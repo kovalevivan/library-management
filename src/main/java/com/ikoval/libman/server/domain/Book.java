@@ -21,6 +21,7 @@ public class Book {
     private List<BookGenre> genres;
     @ManyToMany(mappedBy = "writtenByAuthor")
     private List<Author> authors;
+    private String authorsString;
     private Integer pages;
     @Column(name = "added")
     private Date addedDate;
@@ -100,6 +101,14 @@ public class Book {
 
     public void setAddedDate(Date addedDate) {
         this.addedDate = addedDate;
+    }
+
+    public String getAuthorsString() {
+        return authorsString;
+    }
+
+    public void setAuthorsString(String authorsString) {
+        this.authorsString = authorsString;
     }
 
     @Override

@@ -14,20 +14,19 @@ import java.util.List;
 
 public class AddNewDialogBox extends DialogBox {
 
-    BookTableView bookTableView;
+    private BookTableView bookTableView;
 
 
-    VerticalPanel dialogVPanel = new VerticalPanel();
+    private VerticalPanel dialogVPanel = new VerticalPanel();
 
-    Button closeButton = new Button("Close");
-    Button saveButton = new Button("Save");
+    private Button closeButton = new Button("Close");
+    private Button saveButton = new Button("Save");
 
-    TextBox id = new TextBox();
-    TextBox title= new TextBox();
-    TextBox publisher = new TextBox();
-    TextBox author = new TextBox();
-    TextBox pages = new TextBox();
-    TextBox yearOfPublish = new TextBox();
+    private TextBox title= new TextBox();
+    private TextBox publisher = new TextBox();
+    private TextBox author = new TextBox();
+    private TextBox pages = new TextBox();
+    private TextBox yearOfPublish = new TextBox();
 
 
     public AddNewDialogBox(BookTableView bookTableView) {
@@ -47,8 +46,6 @@ public class AddNewDialogBox extends DialogBox {
     }
 
     private void createFields() {
-        dialogVPanel.add(new HTML("<b>Id:</b>"));
-        dialogVPanel.add(id);
         dialogVPanel.add(new HTML("<b>Title:</b>"));
         dialogVPanel.add(title);
         dialogVPanel.add(new HTML("<b>Author:</b>"));
@@ -69,18 +66,15 @@ public class AddNewDialogBox extends DialogBox {
             @Override
             public void onClick(ClickEvent event) {
                 BookDto bookDto = new BookDto();
-                bookDto.setId(Long.parseLong(id.getText()));
                 bookDto.setTitle(title.getText());
                 bookDto.setPages(Integer.parseInt(pages.getText()));
                 bookDto.setPublisher(publisher.getText());
                 bookDto.setYearOfPublishing(Integer.parseInt(yearOfPublish.getText()));
-                List<String> authors = new ArrayList<>();
-                authors.add(author.getText());
-                bookDto.setAuthors(authors);
+                bookDto.setAuthors(author.getText());
                 Date date = new Date();
                 DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
                 bookDto.setAddedDate(dateTimeFormat.format(date));
-                Window.alert(bookDto.toString());
+/*                Window.alert(bookDto.toString());*/
                 bookTableView.saveBook(bookDto);
                 hide();
             }

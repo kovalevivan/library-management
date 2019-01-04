@@ -23,11 +23,7 @@ public class BookConverter {
                 .stream()
                 .map(genre->genre.getName())
                 .collect(Collectors.toList()));
-        bookDto.setAuthors(
-                book.getAuthors()
-                .stream()
-                .map(author->author.getFullName())
-                .collect(Collectors.toList()));
+        bookDto.setAuthors(book.getAuthorsString());
         bookDto.setPages(book.getPages());
         bookDto.setAddedDate(book.getAddedDate().toString());
         return bookDto;
@@ -44,7 +40,7 @@ public class BookConverter {
                 e.printStackTrace();
             }
         }
-//        book.setAuthors();
+        book.setAuthorsString(bookDto.getAuthors());
 //        book.setGenres();
         book.setPages(bookDto.getPages());
         book.setYearOfPublishing(bookDto.getYearOfPublishing());

@@ -9,29 +9,22 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.ListDataProvider;
+import com.ikoval.libman.client.model.BookTableModel;
 import com.ikoval.libman.client.domain.LibraryManagementClient;
 import com.ikoval.libman.client.domain.RestLibraryManagementClient;
 import com.ikoval.libman.shared.dto.BookDto;
-import com.ikoval.libman.shared.dto.PageDto;
-import com.ikoval.libman.shared.dto.PageRequestDto;
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class BookTableView extends Composite {
 
     private final LibraryManagementClient server = GWT.create(RestLibraryManagementClient.class);
 
-    ListDataProvider<BookDto> dataProvider;
+    BookTableModel dataProvider;
 
     CellTable<BookDto> cellTable = new CellTable<>();
 
     SimplePager pager;
 
-    private final static int DEFAULT_PAGE_SIZE = 10;
+    private final static int DEFAULT_PAGE_SIZE = 4;
 
     public BookTableView() {
         init();
@@ -41,7 +34,6 @@ public class BookTableView extends Composite {
 
         initTableColumns(cellTable);
         initDataProvider(cellTable);
-        retrieveDataFromServer(new PageRequestDto());
         addColumnSorting(cellTable);
         addPagination(cellTable);
 
@@ -80,9 +72,7 @@ public class BookTableView extends Composite {
         TextColumn<BookDto> authorsColumn = new TextColumn<BookDto>() {
             @Override
             public String getValue(BookDto object) {
-                return object.getAuthors()
-                        .stream()
-                        .collect(Collectors.joining(", "));
+                return object.getAuthors();
             }
         };
         authorsColumn.setDataStoreName("authors");
@@ -132,45 +122,28 @@ public class BookTableView extends Composite {
     }
 
     private void initDataProvider(CellTable<BookDto> table) {
-        dataProvider = new ListDataProvider<>();
+        dataProvider = new BookTableModel();
         dataProvider.addDataDisplay(table);
 
         table.setEmptyTableWidget(new Label("No Data"));
-    }
-
-    private void retrieveDataFromServer(PageRequestDto pageRequest) {
-        MethodCallback callback = new MethodCallback<PageDto<BookDto>>() {
-            @Override
-            public void onFailure(Method method, Throwable exception) {
-                Window.alert("Exception");
-            }
-
-            @Override
-            public void onSuccess(Method method, PageDto<BookDto> response) {
-                List<BookDto> list = response.getContent();
-                dataProvider.setList(list);
-                dataProvider.refresh();
-            }
-        };
-        server.getAllBooksWithPagination(pageRequest,callback);
     }
 
     private void addColumnSorting(CellTable<BookDto> table) {
         ColumnSortEvent.AsyncHandler handler = new ColumnSortEvent.AsyncHandler(cellTable)  {
             @Override
             public void onColumnSort(ColumnSortEvent event) {
+/*                Window.alert("Column sort event");*/
                 String name = event.getColumn().getDataStoreName();
-                PageRequestDto pageRequest = new PageRequestDto();
-                pageRequest.setProperty(name);
                 if (event.isSortAscending()) {
-                    pageRequest.setDirection("asc");
+                    dataProvider.setSorting(name,"asc");
                 } else {
-                    pageRequest.setDirection("desc");
+                    dataProvider.setSorting(name,"desc");
                 }
-                retrieveDataFromServer(pageRequest);
+                dataProvider.refresh();
             }
         };
         table.addColumnSortHandler(handler);
+
     }
 
     private void addPagination(CellTable<BookDto> table) {
@@ -178,40 +151,14 @@ public class BookTableView extends Composite {
         pager.setDisplay(table);
         pager.setPageSize(DEFAULT_PAGE_SIZE);
     }
-    
-    public void saveBook(BookDto bookDto) {
-        server.saveBook(bookDto, new MethodCallback() {
-            @Override
-            public void onFailure(Method method, Throwable exception) {
-                Window.alert("Something went wrong");
-            }
 
-            @Override
-            public void onSuccess(Method method, Object response) {
-                List<BookDto> list = dataProvider.getList();
-                list.add(bookDto);
-                dataProvider.refresh();
-                Window.alert("Book was saved");
-            }
-        });
+    public void saveBook(BookDto bookDto) {
+        dataProvider.save(bookDto);
     }
 
-    public void deleteBook(BookDto book) {
-        MethodCallback callback = new MethodCallback() {
-            @Override
-            public void onFailure(Method method, Throwable exception) {
-                Window.alert("Something went wrong");
-            }
-
-            @Override
-            public void onSuccess(Method method, Object response) {
-                dataProvider.getList().remove(book);
-                dataProvider.refresh();
-                cellTable.redraw();
-                Window.alert("Book was successfully deleted");
-            }
-        };
-        server.deleteBook(book.getId(), callback);
+    public void deleteBook(BookDto bookDto) {
+        dataProvider.delete(bookDto);
+        cellTable.redraw();
     }
 
 }
