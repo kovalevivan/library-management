@@ -2,6 +2,8 @@ package com.ikoval.libman.server.controller;
 
 import com.ikoval.libman.server.converter.MyPageResponseConverter;
 import com.ikoval.libman.server.converter.MyPageRequestConverter;
+import com.ikoval.libman.server.domain.Author;
+import com.ikoval.libman.server.service.AuthorService;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.server.service.BookService;
 import com.ikoval.libman.shared.dto.MyPageResponse;
@@ -19,6 +21,7 @@ import java.util.List;
 public class LibraryManagementController {
 
     BookService bookService;
+    AuthorService authorService;
 
     @PostMapping(value = "/bookswithpagination", produces = MediaType.APPLICATION_JSON_VALUE)
     public MyPageResponse<BookDto> getAllBooksWithPagination(@RequestBody MyPageRequest myPageRequestDto) {
@@ -38,9 +41,9 @@ public class LibraryManagementController {
         return bookService.getById(id);
     }
 
-    @DeleteMapping(value = "/book/{id}")
-    public void deleteBookById(@PathVariable Long id) {
-        bookService.deleteById(id);
+    @DeleteMapping(value = "/book/delete", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteBook(@RequestBody BookDto bookDto) {
+        bookService.delete(bookDto);
     }
 
     @PostMapping(value = "/book/save",

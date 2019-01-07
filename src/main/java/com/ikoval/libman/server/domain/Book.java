@@ -17,11 +17,13 @@ public class Book {
     private String publisher;
     @Column(name = "year")
     private Integer yearOfPublishing;
-    @ManyToMany(mappedBy = "booksOfThisGenre")
+    @ManyToMany
+    @JoinTable(name = "jnd_genre_book",
+            joinColumns = @JoinColumn(name = "book_fk"),
+            inverseJoinColumns = @JoinColumn(name = "genre_fk"))
     private List<BookGenre> genres;
     @ManyToMany(mappedBy = "writtenByAuthor")
     private List<Author> authors;
-    private String authorsString;
     private Integer pages;
     @Column(name = "added")
     private Date addedDate;
@@ -103,13 +105,6 @@ public class Book {
         this.addedDate = addedDate;
     }
 
-    public String getAuthorsString() {
-        return authorsString;
-    }
-
-    public void setAuthorsString(String authorsString) {
-        this.authorsString = authorsString;
-    }
 
     @Override
     public boolean equals(Object o) {

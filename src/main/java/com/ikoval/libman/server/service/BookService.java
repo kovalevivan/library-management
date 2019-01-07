@@ -1,5 +1,6 @@
 package com.ikoval.libman.server.service;
 
+import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.shared.dto.BookDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +14,7 @@ public interface BookService {
 
     BookDto getById(Long id);
 
-    void deleteById(Long id);
+    void delete(BookDto bookDto);
 
     void save(BookDto book);
 }

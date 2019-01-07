@@ -1,7 +1,9 @@
 package com.ikoval.libman.server.repository;
 
-import com.ikoval.libman.server.domain.Book;
-import org.springframework.data.repository.Repository;
+import com.ikoval.libman.server.domain.BookGenre;
+import org.springframework.data.repository.CrudRepository;
 
-public interface BookGenreRepository extends Repository<Book,Long> {
+public interface BookGenreRepository extends CrudRepository<BookGenre,Long> {
+
+     BookGenre findByName(String name);
 }

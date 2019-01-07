@@ -24,7 +24,7 @@ public class BookTableView extends Composite {
 
     SimplePager pager;
 
-    private final static int DEFAULT_PAGE_SIZE = 4;
+    private final static int DEFAULT_PAGE_SIZE = 10;
 
     public BookTableView() {
         init();
@@ -88,6 +88,15 @@ public class BookTableView extends Composite {
         numberOfPagesColumn.setDataStoreName("pages");
         table.addColumn(numberOfPagesColumn , "Number of pages");
 
+        //Publisher
+        TextColumn<BookDto> publisher = new TextColumn<BookDto>() {
+            @Override
+            public String getValue(BookDto object) { return object.getPublisher(); }
+        };
+        publisher.setDataStoreName("publisher");
+        publisher.setSortable(true);
+        table.addColumn(publisher , "Publisher");
+
         //Year of publishing
         TextColumn<BookDto> yearOfPublishing = new TextColumn<BookDto>() {
             @Override
@@ -96,6 +105,15 @@ public class BookTableView extends Composite {
         yearOfPublishing.setDataStoreName("yearOfPublishing");
         yearOfPublishing.setSortable(true);
         table.addColumn(yearOfPublishing , "Year of publication");
+
+        //Genres
+        TextColumn<BookDto> genres = new TextColumn<BookDto>() {
+            @Override
+            public String getValue(BookDto object) { return object.getGenres(); }
+        };
+        genres.setDataStoreName("genres");
+        genres.setSortable(true);
+        table.addColumn(genres , "Genres");
 
         //Date when book was added to database
         TextColumn<BookDto> addedDate = new TextColumn<BookDto>() {

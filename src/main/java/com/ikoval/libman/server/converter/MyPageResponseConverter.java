@@ -10,6 +10,7 @@ public class MyPageResponseConverter {
         MyPageResponse<BookDto> myPageResponse = new MyPageResponse();
         myPageResponse.setContent(page.getContent());
         myPageResponse.setTotalElements((int) page.getTotalElements());
+        myPageResponse.setLast(page.isLast());
         return myPageResponse;
     }
 }

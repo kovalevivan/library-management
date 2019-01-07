@@ -15,10 +15,7 @@ public class BookGenre {
     private Long id;
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "jnd_genre_book",
-            joinColumns = @JoinColumn(name = "book_fk"),
-            inverseJoinColumns = @JoinColumn(name = "genre_fk"))
+    @ManyToMany(mappedBy = "genres")
     private List<Book> booksOfThisGenre;
 
     public BookGenre() {

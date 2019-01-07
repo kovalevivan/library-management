@@ -32,7 +32,8 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
         @Override
         public void onSuccess(Method method, MyPageResponse<BookDto> bookDtoMyPageResponse) {
             list = bookDtoMyPageResponse.getContent();
-            updateRowCount(bookDtoMyPageResponse.getTotalElements(),true);
+            boolean isLast = bookDtoMyPageResponse.getLast();
+            updateRowCount(bookDtoMyPageResponse.getTotalElements(),isLast);
             updateRowData(myPageRequest.getStart(),list);
         }
     };
@@ -91,6 +92,6 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
                 Window.alert("Book was successfully deleted");
             }
         };
-        server.deleteBook(bookDto.getId(), callback);
+        server.deleteBook(bookDto, callback);
     }
 }

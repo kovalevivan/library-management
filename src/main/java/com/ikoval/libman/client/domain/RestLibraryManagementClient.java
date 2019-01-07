@@ -27,8 +27,8 @@ public interface RestLibraryManagementClient extends LibraryManagementClient, Re
 
     @Override
     @DELETE
-    @Path("/api/book/{id}")
-    void deleteBook(@PathParam("id") Long id, MethodCallback callback);
+    @Path("/api/book/delete")
+    void deleteBook(BookDto bookDto, MethodCallback callback);
 
     @Override
     @POST
