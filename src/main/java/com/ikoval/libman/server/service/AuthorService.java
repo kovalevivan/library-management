@@ -11,5 +11,4 @@ public interface AuthorService {
 
     void delete(Author author);
 
-
 }

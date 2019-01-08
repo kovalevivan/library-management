@@ -10,6 +10,7 @@ public class MyPageRequest {
     private Integer size = 4;
     private String direction;
     private String property;
+    private BookDto filter = new BookDto();
 
     public MyPageRequest() {
     }
@@ -52,5 +53,13 @@ public class MyPageRequest {
 
     public void setStart(Integer start) {
         this.start = start;
+    }
+
+    public BookDto getFilter() {
+        return filter;
+    }
+
+    public void setFilter(BookDto filter) {
+        this.filter = filter;
     }
 }

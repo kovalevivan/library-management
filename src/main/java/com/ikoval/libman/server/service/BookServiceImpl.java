@@ -1,6 +1,7 @@
 package com.ikoval.libman.server.service;
 
 import com.ikoval.libman.server.converter.BookConverter;
+import com.ikoval.libman.server.converter.PageConverter;
 import com.ikoval.libman.server.domain.Author;
 import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.domain.BookGenre;
@@ -9,6 +10,7 @@ import com.ikoval.libman.server.repository.BookGenreRepository;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.server.repository.BookRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -30,13 +32,17 @@ public class BookServiceImpl implements BookService {
     BookGenreRepository bookGenreRepository;
 
     @Override
-    public Page<BookDto> getAllBooks(Pageable pageable) {
-        Page<Book> books = bookRepository.findAll(pageable);
-        long totalElement = books.getTotalElements();
-        List<BookDto> bookDtos = books.stream()
-                .map(entity -> BookConverter.convertToBookResponseDto(entity))
-                .collect(Collectors.toList());
-        return new PageImpl<BookDto>(bookDtos,pageable,totalElement);
+    public Page<BookDto> getAllBooks(Pageable pageRequest) {
+        Page<Book> pageResponse = bookRepository.findAll(pageRequest);
+        return PageConverter.convert(pageResponse,pageRequest);
+    }
+
+    @Override
+    public Page<BookDto> findAll(BookDto bookDtoExample, Pageable pageRequest) {
+        Book bookExample = BookConverter.convertToBook(bookDtoExample);
+        Example<Book> example = Example.of(bookExample);
+        Page<Book> pageResponse = bookRepository.findAll(example,pageRequest);
+        return PageConverter.convert(pageResponse,pageRequest);
     }
 
     @Override

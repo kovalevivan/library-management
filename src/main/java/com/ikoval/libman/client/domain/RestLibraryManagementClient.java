@@ -34,4 +34,5 @@ public interface RestLibraryManagementClient extends LibraryManagementClient, Re
     @POST
     @Path("/api/bookswithpagination")
     void getAllBooksWithPagination(@RequestBody MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
+
 }

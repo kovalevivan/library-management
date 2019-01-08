@@ -51,7 +51,14 @@ INSERT INTO PUBLIC."jnd_author_book"("author_fk","book_fk") VALUES
                                                                    (-4,-4),
                                                                    (-3,-3),
                                                                    (-2,-2),
-                                                                   (-1,-1);
+                                                                   (-1,-1),
+                                                                   (-16, -3),
+                                                                   (-5,-6),
+                                                                   (-3,-1),
+                                                                   (-3,-15),
+                                                                   (-14, -8),
+                                                                   (-13,-8),
+                                                                   (-4,-5);
 
 INSERT INTO PUBLIC."book_genre"("id","name") VALUES
 (-16, 'Genre16'),
@@ -87,7 +94,12 @@ INSERT INTO PUBLIC."jnd_genre_book"("book_fk","genre_fk") VALUES
 (-4,-4),
 (-3,-3),
 (-2,-2),
-(-1,-1);
+(-1,-1),
+(-4,-1),
+(-10, -16),
+(-15, -4),
+(-3,-2),
+(-8,-9);
 
 
 

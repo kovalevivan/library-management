@@ -32,7 +32,7 @@ public class MyWebApp implements EntryPoint {
     advancedSearch.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
-        new AdvancedSearchDialogBox().center();
+        new AdvancedSearchDialogBox(bookTableView).center();
       }
     });
 

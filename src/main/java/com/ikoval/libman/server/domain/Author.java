@@ -22,6 +22,10 @@ public class Author {
     public Author() {
     }
 
+    public Author(String fullName) {
+        this.fullName = fullName;
+    }
+
     public Author(String fullName, List<Book> writtenByAuthor) {
         this.fullName = fullName;
         this.writtenByAuthor = writtenByAuthor;

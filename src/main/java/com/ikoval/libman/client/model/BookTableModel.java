@@ -23,6 +23,8 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
 
     private MyPageRequest myPageRequest = new MyPageRequest();
 
+    private BookDto filter;
+
     MethodCallback<MyPageResponse<BookDto>> callback = new MethodCallback<MyPageResponse<BookDto>>() {
         @Override
         public void onFailure(Method method, Throwable throwable) {
@@ -50,16 +52,30 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
         myPageRequest.setStart(start);
         myPageRequest.setPage(page);
         myPageRequest.setSize(length);
-        server.getAllBooksWithPagination(myPageRequest,callback);
+        refresh();
     }
 
     public void refresh() {
-        server.getAllBooksWithPagination(myPageRequest,callback);
+        server.getAllBooksWithPagination(myPageRequest, callback);
     }
 
     public void setSorting(String property, String direction) {
         myPageRequest.setProperty(property);
         myPageRequest.setDirection(direction);
+    }
+
+    public void setFilter(BookDto bookDto) {
+        myPageRequest.setFilter(bookDto);
+        refresh();
+    }
+
+    public BookDto getFilter() {
+        return myPageRequest.getFilter();
+    }
+
+    public void clearFilter() {
+        myPageRequest.setFilter(null);
+        refresh();
     }
 
     public void save(BookDto bookDto) {

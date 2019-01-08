@@ -1,15 +1,18 @@
 package com.ikoval.libman.server.controller;
 
+import com.ikoval.libman.server.converter.BookConverter;
 import com.ikoval.libman.server.converter.MyPageResponseConverter;
 import com.ikoval.libman.server.converter.MyPageRequestConverter;
-import com.ikoval.libman.server.domain.Author;
+import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.service.AuthorService;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.server.service.BookService;
 import com.ikoval.libman.shared.dto.MyPageResponse;
 import com.ikoval.libman.shared.dto.MyPageRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +27,14 @@ public class LibraryManagementController {
     AuthorService authorService;
 
     @PostMapping(value = "/bookswithpagination", produces = MediaType.APPLICATION_JSON_VALUE)
-    public MyPageResponse<BookDto> getAllBooksWithPagination(@RequestBody MyPageRequest myPageRequestDto) {
-        org.springframework.data.domain.PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequestDto);
-        Page<BookDto> page = bookService.getAllBooks(pageRequest);
+    public MyPageResponse<BookDto> getAllBooksWithPagination(@RequestBody MyPageRequest myPageRequest) {
+        PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
+        Page<BookDto> page;
+        if(myPageRequest.getFilter() == null) {
+            page = bookService.getAllBooks(pageRequest);
+        } else {
+            page = bookService.findAll(myPageRequest.getFilter(),pageRequest);
+        }
         return MyPageResponseConverter.convert(page);
     }
 
