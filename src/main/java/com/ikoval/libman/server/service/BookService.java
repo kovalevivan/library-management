@@ -1,24 +1,38 @@
 package com.ikoval.libman.server.service;
 
+import com.ikoval.libman.server.converter.BookConverter;
+import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.shared.dto.BookDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+import com.ikoval.libman.server.repository.BookRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-public interface BookService {
-    Page<BookDto> getAllBooks(Pageable pageable);
+@Service
+@AllArgsConstructor
+public class BookService {
 
-    Page<BookDto> findAll(BookDto bookDto, Pageable pageable);
+    BookRepository bookRepository;
 
-    Page<BookDto> findAll(Specification spec, Pageable pageable);
 
-    List<BookDto> getAllBooks();
+    public List<BookDto> getAllBooks() {
+        List<Book> books = (List<Book>) bookRepository.findAll();
+        return books.stream()
+                .map(entity -> BookConverter.convertToBookResponseDto(entity))
+                .collect(Collectors.toList());
+    }
 
-    BookDto getById(Long id);
+    public BookDto getById(Long id) {
+        Optional<Book> book = bookRepository.findById(id);
+        return book.isPresent() ? BookConverter.convertToBookResponseDto(book.get()) : new BookDto();
+    }
 
-    void delete(BookDto bookDto);
+    public void delete(BookDto bookDto) {
+        bookRepository.deleteById(bookDto.getId());
+    }
 
-    void save(BookDto book);
+
 }

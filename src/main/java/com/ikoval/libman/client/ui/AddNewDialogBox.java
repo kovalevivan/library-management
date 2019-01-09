@@ -6,6 +6,7 @@ import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.ui.Button;
+import com.ikoval.libman.client.model.BookTableModel;
 import com.ikoval.libman.shared.dto.BookDto;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class AddNewDialogBox extends DialogBox {
 
-    private BookTableView bookTableView;
+    private BookTableModel bookTableModel;
 
 
     private VerticalPanel dialogVPanel = new VerticalPanel();
@@ -30,8 +31,8 @@ public class AddNewDialogBox extends DialogBox {
     private TextBox genres = new TextBox();
 
 
-    public AddNewDialogBox(BookTableView bookTableView) {
-        this.bookTableView = bookTableView;
+    public AddNewDialogBox(BookTableModel bookTableModel) {
+        this.bookTableModel = bookTableModel;
         setText("Add new Book");
         setAnimationEnabled(true);
 
@@ -79,7 +80,7 @@ public class AddNewDialogBox extends DialogBox {
                 DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
                 bookDto.setAddedDate(dateTimeFormat.format(date));
 /*                Window.alert(bookDto.toString());*/
-                bookTableView.saveBook(bookDto);
+                bookTableModel.save(bookDto);
                 hide();
             }
         });

@@ -16,11 +16,6 @@ import java.util.List;
 public interface RestLibraryManagementClient extends LibraryManagementClient, RestService {
 
     @Override
-    @GET
-    @Path("/api/books")
-    void getAllBooks(MethodCallback<List<BookDto>> callback);
-
-    @Override
     @POST
     @Path("/api/book/save")
     void saveBook(BookDto bookDto, MethodCallback callback);
@@ -32,7 +27,7 @@ public interface RestLibraryManagementClient extends LibraryManagementClient, Re
 
     @Override
     @POST
-    @Path("/api/bookswithpagination")
-    void getAllBooksWithPagination(@RequestBody MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
+    @Path("/api/books")
+    void findAllBook(@RequestBody MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
 
 }

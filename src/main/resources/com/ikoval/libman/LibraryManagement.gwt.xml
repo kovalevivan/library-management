@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<module rename-to='demogwt'>
+<module rename-to='libman'>
 	<!-- Inherit the core Web Toolkit stuff.                        -->
 	<inherits name='com.google.gwt.user.User'/>
 
@@ -16,7 +16,7 @@
 	<!-- Other module inherits                                      -->
 
 	<!-- Specify the app entry point class.                         -->
-	<entry-point class='com.ikoval.libman.client.MyWebApp'/>
+	<entry-point class='com.ikoval.libman.client.LibraryManagementClient'/>
 
 	<!-- Specify the paths for translatable code                    -->
 	<source path='client'/>

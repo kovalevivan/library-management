@@ -26,14 +26,16 @@ public class BookTableView extends Composite {
 
     private final static int DEFAULT_PAGE_SIZE = 10;
 
-    public BookTableView() {
+    public BookTableView(BookTableModel bookTableModel) {
+        dataProvider = bookTableModel;
+        dataProvider.addDataDisplay(cellTable);
+        cellTable.setEmptyTableWidget(new Label("No Data"));
         init();
     }
 
     public void init() {
 
         initTableColumns(cellTable);
-        initDataProvider(cellTable);
         addColumnSorting(cellTable);
         addPagination(cellTable);
 
@@ -133,17 +135,10 @@ public class BookTableView extends Composite {
         deleteButton.setFieldUpdater(new FieldUpdater<BookDto, String>() {
             @Override
             public void update(int index, BookDto object, String value) {
-                deleteBook(object);
+                dataProvider.delete(object);
             }
         });
 
-    }
-
-    private void initDataProvider(CellTable<BookDto> table) {
-        dataProvider = new BookTableModel();
-        dataProvider.addDataDisplay(table);
-
-        table.setEmptyTableWidget(new Label("No Data"));
     }
 
     private void addColumnSorting(CellTable<BookDto> table) {
@@ -168,15 +163,6 @@ public class BookTableView extends Composite {
         this.pager = new SimplePager();
         pager.setDisplay(table);
         pager.setPageSize(DEFAULT_PAGE_SIZE);
-    }
-
-    public void saveBook(BookDto bookDto) {
-        dataProvider.save(bookDto);
-    }
-
-    public void deleteBook(BookDto bookDto) {
-        dataProvider.delete(bookDto);
-        cellTable.redraw();
     }
 
 }

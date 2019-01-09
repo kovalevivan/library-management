@@ -22,10 +22,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoGwtSpringbootApplication {
+public class LibraryManagementSpringbootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoGwtSpringbootApplication.class, args);
+		SpringApplication.run(LibraryManagementSpringbootApplication.class, args);
 	}
 
 }

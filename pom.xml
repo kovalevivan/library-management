@@ -149,7 +149,7 @@
                 </executions>
                 <configuration>
                     <sourceLevel>1.8</sourceLevel>
-                    <module>com.ikoval.libman.DemoGwt</module>
+                    <module>com.ikoval.libman.LibraryManagement</module>
                     <extraJvmArgs>-Xmx1024M -Xss1024k</extraJvmArgs>
                     <runTarget>index.html</runTarget>
                     <persistentunitcachedir>${project.build.directory}</persistentunitcachedir>

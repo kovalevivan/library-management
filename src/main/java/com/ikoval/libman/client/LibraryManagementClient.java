@@ -4,15 +4,19 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
+import com.ikoval.libman.client.model.BookTableModel;
 import com.ikoval.libman.client.ui.AddNewDialogBox;
 import com.ikoval.libman.client.ui.AdvancedSearchDialogBox;
 import com.ikoval.libman.client.ui.BookTableView;
 
-public class MyWebApp implements EntryPoint {
+public class LibraryManagementClient implements EntryPoint {
 
   private VerticalPanel mainPanel = new VerticalPanel();
   private HorizontalPanel addPanel = new HorizontalPanel();
-  private BookTableView bookTableView = new BookTableView();
+
+  private BookTableModel bookTableModel = new BookTableModel();
+
+  private BookTableView bookTableView = new BookTableView(bookTableModel);
 
   private Button addButton = new Button("Add new");
   private Button advancedSearch = new Button("Advanced Search");
@@ -26,13 +30,13 @@ public class MyWebApp implements EntryPoint {
     addButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
-        new AddNewDialogBox(bookTableView).center();
+        new AddNewDialogBox(bookTableModel).center();
       }
     });
     advancedSearch.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent event) {
-        new AdvancedSearchDialogBox(bookTableView).center();
+        new AdvancedSearchDialogBox(bookTableModel).center();
       }
     });
 

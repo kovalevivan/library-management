@@ -28,9 +28,9 @@ public class AdvancedSearchDialogBox extends DialogBox {
 
 
 
-    public AdvancedSearchDialogBox(BookTableView bookTableView) {
-        this.bookTableModel = bookTableView.dataProvider;
-        filter = bookTableModel.getFilter();
+    public AdvancedSearchDialogBox(BookTableModel bookTableModel) {
+        this.bookTableModel = bookTableModel;
+        filter = this.bookTableModel.getFilter();
         setText("Advanced Search");
         setAnimationEnabled(true);
 

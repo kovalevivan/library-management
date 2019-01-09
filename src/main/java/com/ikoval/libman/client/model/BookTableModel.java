@@ -41,6 +41,9 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
         }
     };
 
+    public BookTableModel() {
+    }
+
     @Override
     protected void onRangeChanged(HasData<BookDto> display) {
         final Range range = display.getVisibleRange();
@@ -57,7 +60,7 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
     }
 
     public void refresh() {
-        server.getAllBooksWithPagination(myPageRequest, callback);
+        server.findAllBook(myPageRequest, callback);
     }
 
     public void setSorting(String property, String direction) {
