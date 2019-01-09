@@ -7,6 +7,7 @@ import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
 import com.ikoval.libman.client.domain.LibraryManagementClient;
 import com.ikoval.libman.client.domain.RestLibraryManagementClient;
+import com.ikoval.libman.shared.FilterCriteria;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.shared.dto.MyPageResponse;
 import com.ikoval.libman.shared.dto.MyPageRequest;
@@ -64,12 +65,15 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
         myPageRequest.setDirection(direction);
     }
 
-    public void setFilter(BookDto bookDto) {
-        myPageRequest.setFilter(bookDto);
+    public void setFilter(FilterCriteria filter) {
+        myPageRequest.setFilter(filter);
         refresh();
     }
 
-    public BookDto getFilter() {
+    public FilterCriteria getFilter() {
+        if(myPageRequest.getFilter() == null) {
+            return new FilterCriteria();
+        }
         return myPageRequest.getFilter();
     }
 

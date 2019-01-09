@@ -6,6 +6,7 @@ import com.ikoval.libman.server.converter.MyPageRequestConverter;
 import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.filter.MySpecification;
 import com.ikoval.libman.server.service.AuthorService;
+import com.ikoval.libman.shared.FilterCriteria;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.server.service.BookService;
 import com.ikoval.libman.shared.dto.MyPageResponse;
@@ -14,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +36,8 @@ public class LibraryManagementController {
         if(myPageRequest.getFilter() == null) {
             page = bookService.getAllBooks(pageRequest);
         } else {
-            BookDto filter = myPageRequest.getFilter();
-            page = bookService.findAll(MySpecification.filterBook(filter.getAuthors()),pageRequest);
+            FilterCriteria filter = myPageRequest.getFilter();
+            page = bookService.findAll(MySpecification.filterBook(filter),pageRequest);
         }
         return MyPageResponseConverter.convert(page);
     }

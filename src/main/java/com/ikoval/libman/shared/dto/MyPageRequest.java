@@ -1,6 +1,7 @@
 package com.ikoval.libman.shared.dto;
 
 
+import com.ikoval.libman.shared.FilterCriteria;
 
 public class MyPageRequest {
 
@@ -10,7 +11,7 @@ public class MyPageRequest {
     private Integer size = 4;
     private String direction;
     private String property;
-    private BookDto filter;
+    private FilterCriteria filter;
 
     public MyPageRequest() {
     }
@@ -55,11 +56,11 @@ public class MyPageRequest {
         this.start = start;
     }
 
-    public BookDto getFilter() {
+    public FilterCriteria getFilter() {
         return filter;
     }
 
-    public void setFilter(BookDto filter) {
+    public void setFilter(FilterCriteria filter) {
         this.filter = filter;
     }
 }
