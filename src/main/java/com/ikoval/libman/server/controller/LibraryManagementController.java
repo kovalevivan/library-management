@@ -4,6 +4,7 @@ import com.ikoval.libman.server.converter.BookConverter;
 import com.ikoval.libman.server.converter.MyPageResponseConverter;
 import com.ikoval.libman.server.converter.MyPageRequestConverter;
 import com.ikoval.libman.server.domain.Book;
+import com.ikoval.libman.server.filter.MySpecification;
 import com.ikoval.libman.server.service.AuthorService;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.server.service.BookService;
@@ -33,7 +34,8 @@ public class LibraryManagementController {
         if(myPageRequest.getFilter() == null) {
             page = bookService.getAllBooks(pageRequest);
         } else {
-            page = bookService.findAll(myPageRequest.getFilter(),pageRequest);
+            BookDto filter = myPageRequest.getFilter();
+            page = bookService.findAll(MySpecification.filterBook(filter.getAuthors()),pageRequest);
         }
         return MyPageResponseConverter.convert(page);
     }

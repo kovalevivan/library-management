@@ -21,6 +21,10 @@ public class BookGenre {
     public BookGenre() {
     }
 
+    public BookGenre(String name) {
+        this.name = name;
+    }
+
     public BookGenre(String name, List<Book> booksOfThisGenre) {
         this.name = name;
         this.booksOfThisGenre = booksOfThisGenre;

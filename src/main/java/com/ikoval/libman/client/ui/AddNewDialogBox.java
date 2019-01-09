@@ -27,6 +27,7 @@ public class AddNewDialogBox extends DialogBox {
     private TextBox author = new TextBox();
     private TextBox pages = new TextBox();
     private TextBox yearOfPublish = new TextBox();
+    private TextBox genres = new TextBox();
 
 
     public AddNewDialogBox(BookTableView bookTableView) {
@@ -54,6 +55,8 @@ public class AddNewDialogBox extends DialogBox {
         dialogVPanel.add(publisher);
         dialogVPanel.add(new HTML("<b>Pages:</b>"));
         dialogVPanel.add(pages);
+        dialogVPanel.add(new HTML("<b>Genres:</b>"));
+        dialogVPanel.add(genres);
         dialogVPanel.add(new HTML("<b>Year of publish:</b>"));
         dialogVPanel.add(yearOfPublish);
         dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_LEFT);
@@ -71,6 +74,7 @@ public class AddNewDialogBox extends DialogBox {
                 bookDto.setPublisher(publisher.getText());
                 bookDto.setYearOfPublishing(Integer.parseInt(yearOfPublish.getText()));
                 bookDto.setAuthors(author.getText());
+                bookDto.setGenres(genres.getText());
                 Date date = new Date();
                 DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
                 bookDto.setAddedDate(dateTimeFormat.format(date));

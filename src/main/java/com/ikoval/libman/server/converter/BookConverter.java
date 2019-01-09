@@ -44,6 +44,7 @@ public class BookConverter {
                 e.printStackTrace();
             }
         }
+        book.setPublisher(bookDto.getPublisher());
         book.setPages(bookDto.getPages());
         book.setYearOfPublishing(bookDto.getYearOfPublishing());
         return book;

@@ -10,7 +10,7 @@ public class MyPageRequest {
     private Integer size = 4;
     private String direction;
     private String property;
-    private BookDto filter = new BookDto();
+    private BookDto filter;
 
     public MyPageRequest() {
     }

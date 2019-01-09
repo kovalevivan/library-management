@@ -16,11 +16,14 @@ public class AuthorServiceImpl implements AuthorService {
 
     AuthorRepository repository;
 
+
     @Override
     public Author getById(Long id) {
         Optional<Author> author = repository.findById(id);
         return author.isPresent() ? author.get() : new Author();
     }
+
+
 
     @Override
     public void save(Author author) {

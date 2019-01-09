@@ -22,7 +22,10 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_fk"),
             inverseJoinColumns = @JoinColumn(name = "genre_fk"))
     private List<BookGenre> genres;
-    @ManyToMany(mappedBy = "writtenByAuthor")
+    @ManyToMany
+    @JoinTable(name = "jnd_author_book",
+            joinColumns = @JoinColumn(name = "author_fk"),
+            inverseJoinColumns = @JoinColumn(name = "book_fk"))
     private List<Author> authors;
     private Integer pages;
     @Column(name = "added")

@@ -13,10 +13,7 @@ public class Author {
     private Long id;
     private String fullName;
 
-    @ManyToMany
-    @JoinTable(name = "jnd_author_book",
-            joinColumns = @JoinColumn(name = "author_fk"),
-            inverseJoinColumns = @JoinColumn(name = "book_fk"))
+    @ManyToMany(mappedBy = "authors")
     private List<Book> writtenByAuthor;
 
     public Author() {

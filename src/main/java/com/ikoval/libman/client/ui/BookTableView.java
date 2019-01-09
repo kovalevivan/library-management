@@ -76,7 +76,7 @@ public class BookTableView extends Composite {
             }
         };
         authorsColumn.setDataStoreName("authors");
-        authorsColumn.setSortable(true);
+/*        authorsColumn.setSortable(true);*/
         table.addColumn(authorsColumn, "Authors");
 
         //Number of pages
@@ -112,7 +112,7 @@ public class BookTableView extends Composite {
             public String getValue(BookDto object) { return object.getGenres(); }
         };
         genres.setDataStoreName("genres");
-        genres.setSortable(true);
+/*        genres.setSortable(true);*/
         table.addColumn(genres , "Genres");
 
         //Date when book was added to database

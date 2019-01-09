@@ -12,8 +12,8 @@ import com.ikoval.libman.server.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,6 +46,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Page<BookDto> findAll(Specification spec, Pageable pageRequest) {
+        Page<Book> pageResponse = bookRepository.findAll(spec,pageRequest);
+        return PageConverter.convert(pageResponse,pageRequest);
+    }
+
+
+    @Override
     public List<BookDto> getAllBooks() {
         List<Book> books = (List<Book>) bookRepository.findAll();
         return books.stream()
@@ -61,25 +68,19 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void delete(BookDto bookDto) {
-        String authorName = bookDto.getAuthors();
-        Author authorToUpdate = authorRepository.getByFullName(authorName);
-        List<Book> books = authorToUpdate.getWrittenByAuthor();
-        List<Book> preparedList = books.stream()
-                .filter(entity-> entity.getId() != bookDto.getId())
-                .collect(Collectors.toList());
-        authorToUpdate.setWrittenByAuthor(preparedList);
-        authorRepository.save(authorToUpdate);
         bookRepository.deleteById(bookDto.getId());
     }
 
     @Override
     public void save(BookDto bookDto) {
         Book book = BookConverter.convertToBook(bookDto);
-        bookRepository.save(book);
         String[] authorsString = bookDto.getAuthors().split(",");
-        addBookToAuthors(authorsString, book);
-        String[] genres = bookDto.getGenres().split(",");
-        addGenres(genres, book);
+        addAuthors(authorsString, book);
+        if(bookDto.getGenres() != null) {
+            String[] genres = bookDto.getGenres().split(",");
+            addGenres(genres, book);
+        }
+        bookRepository.save(book);
     }
 
     private void addGenres(String[] genres, Book book) {
@@ -87,8 +88,7 @@ public class BookServiceImpl implements BookService {
         for(String s : genres) {
             BookGenre genre = bookGenreRepository.findByName(s);
             if(genre == null) {
-                genre = new BookGenre();
-                genre.setName(s);
+                genre = new BookGenre(s);
                 bookGenreRepository.save(genre);
             }
             list.add(genre);
@@ -96,21 +96,17 @@ public class BookServiceImpl implements BookService {
         book.setGenres(list);
     }
 
-    private void addBookToAuthors(String[] authorsString, Book book) {
+    private void addAuthors(String[] authorsString, Book book) {
+        List<Author> list = new ArrayList<>();
         for(String s : authorsString) {
             Author author = authorRepository.getByFullName(s);
-            List<Book> list;
             if(author == null) {
-                author = new Author();
-                author.setFullName(s);
-                list = new ArrayList<>();
-            } else {
-                list = author.getWrittenByAuthor();
+                author = new Author(s);
+                authorRepository.save(author);
             }
-            list.add(book);
-            author.setWrittenByAuthor(list);
-            authorRepository.save(author);
+            list.add(author);
         }
+        book.setAuthors(list);
     }
 
 }
