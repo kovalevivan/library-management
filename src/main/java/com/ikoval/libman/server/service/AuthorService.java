@@ -17,17 +17,14 @@ public class AuthorService {
     AuthorRepository repository;
 
 
-
     public Author getById(Long id) {
         Optional<Author> author = repository.findById(id);
         return author.isPresent() ? author.get() : new Author();
     }
 
-
     public void save(Author author) {
         repository.save(author);
     }
-
 
     public void delete(Author author) {
         repository.delete(author);

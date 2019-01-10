@@ -3,14 +3,20 @@ package com.ikoval.libman.shared.dto;
 
 import com.ikoval.libman.shared.FilterCriteria;
 
+
 public class MyPageRequest {
+
+    private final static int DEFAULT_SIZE = 10;
+    private final static int DEFAULT_PAGE = 0;
+    private final static String DEFAULT_DIRECTION = "ASC";
+    private final static String DEFAULT_PROPERTY = "id";
 
 
     private Integer start;
-    private Integer page = 0;
-    private Integer size = 4;
-    private String direction;
-    private String property;
+    private Integer page = DEFAULT_PAGE;
+    private Integer size = DEFAULT_SIZE;
+    private String direction = DEFAULT_DIRECTION;
+    private String property = DEFAULT_PROPERTY;
     private FilterCriteria filter;
 
     public MyPageRequest() {
