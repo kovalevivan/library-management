@@ -1,7 +1,7 @@
 # library-management
 ## Demo in Heroku
 
-- [Spring GWT Demo in Heroku](http://ikoval-library-management.herokuapp.com/demogwt/index.html)
+- [Spring GWT Demo in Heroku](http://ikoval-library-management.herokuapp.com/)
 
 ## Development
 1. H2 database
