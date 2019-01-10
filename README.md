@@ -7,3 +7,7 @@
 1. H2 database
 
 JDBC URL to use in memory database jdbc:h2:mem:testdb
+
+## Security
+* User: admin
+* Password: admin
