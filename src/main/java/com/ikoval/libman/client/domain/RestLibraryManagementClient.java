@@ -30,4 +30,9 @@ public interface RestLibraryManagementClient extends LibraryManagementClient, Re
     @Path("/api/books")
     void findAllBook(@RequestBody MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
 
+    @Override
+    @POST
+    @Path("/api/books/filter")
+    void findAllBookWithFilter(@RequestBody MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
+
 }

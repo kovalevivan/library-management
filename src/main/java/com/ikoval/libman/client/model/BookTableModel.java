@@ -24,7 +24,6 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
 
     private MyPageRequest myPageRequest = new MyPageRequest();
 
-    private BookDto filter;
 
     MethodCallback<MyPageResponse<BookDto>> callback = new MethodCallback<MyPageResponse<BookDto>>() {
         @Override
@@ -60,7 +59,11 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
     }
 
     public void refresh() {
-        server.findAllBook(myPageRequest, callback);
+        if(myPageRequest.getFilter() == null) {
+            server.findAllBook(myPageRequest, callback);
+        } else {
+            server.findAllBookWithFilter(myPageRequest,callback);
+        }
     }
 
     public void setSorting(String property, String direction) {

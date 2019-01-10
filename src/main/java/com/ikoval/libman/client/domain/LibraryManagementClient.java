@@ -15,4 +15,6 @@ public interface LibraryManagementClient {
 
     void findAllBook(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
 
+    void findAllBookWithFilter(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
+
 }

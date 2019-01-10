@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("libman/api")
 @AllArgsConstructor
-public class LibraryManagementController {
+public class BookRestController {
 
     BookService bookService;
 
@@ -27,14 +27,16 @@ public class LibraryManagementController {
     @PostMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
     public MyPageResponse<BookDto> findBooksByPageRequest(@RequestBody MyPageRequest myPageRequest) {
         PageRequest pageRequest = conversionService.convert(myPageRequest);
-        Page<Book> pageResponse;
-        if(myPageRequest.getFilter() == null) {
-            pageResponse = bookService.findAll(pageRequest);
-        } else {
-            FilterCriteria filter = myPageRequest.getFilter();
-            Specification<Book> spec = MySpecification.filterBook(filter);
-            pageResponse = bookService.findAll(spec,pageRequest);
-        }
+        Page<Book> pageResponse = bookService.findAll(pageRequest);
+        return conversionService.convert(pageResponse);
+    }
+
+    @PostMapping(value = "/books/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    public MyPageResponse<BookDto> findBookByPageRequestWithFilter(@RequestBody MyPageRequest myPageRequest) {
+        PageRequest pageRequest = conversionService.convert(myPageRequest);
+        FilterCriteria filter = myPageRequest.getFilter();
+        Specification<Book> spec = MySpecification.filterBook(filter);
+        Page<Book> pageResponse = bookService.findAll(spec,pageRequest);
         return conversionService.convert(pageResponse);
     }
 
