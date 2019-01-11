@@ -25,19 +25,12 @@ public class BookService {
         return bookRepository.findAll(specification,pageRequest);
     }
 
-    public List<Book> findAll() {
-        List<Book> books = (List<Book>) bookRepository.findAll();
-        return books;
+    public Optional<Book> getById(Long id) {
+        return bookRepository.findById(id);
     }
 
-    public Book getById(Long id) {
-        Optional<Book> book = bookRepository.findById(id);
-        return book.isPresent() ? book.get() : new Book();
-    }
-
-
-    public void save(Book book) {
-        bookRepository.save(book);
+    public Book save(Book book) {
+        return bookRepository.save(book);
     }
 
     public void delete(Long id) {

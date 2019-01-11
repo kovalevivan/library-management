@@ -15,6 +15,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("libman/api")
 @AllArgsConstructor
@@ -42,7 +44,8 @@ public class BookRestController {
 
     @GetMapping(value = "/book/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public BookDto getBookById(@PathVariable Long id) {
-        Book book = bookService.getById(id);
+        Optional<Book> bookOptional = bookService.getById(id);
+        Book book = bookOptional.isPresent() ? bookOptional.get() : new Book();
         return conversionService.convert(book);
     }
 
@@ -55,5 +58,10 @@ public class BookRestController {
     public void saveBook(@RequestBody BookDto bookDto) {
         Book book = conversionService.convert(bookDto);
         bookService.save(book);
+    }
+
+    @GetMapping(value = "/test")
+    public String testBook() {
+        return "Hello world";
     }
 }

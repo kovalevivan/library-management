@@ -17,12 +17,12 @@ public class Book {
     private String publisher;
     @Column(name = "year")
     private Integer yearOfPublishing;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "jnd_genre_book",
             joinColumns = @JoinColumn(name = "book_fk"),
             inverseJoinColumns = @JoinColumn(name = "genre_fk"))
     private List<BookGenre> genres;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "jnd_author_book",
             joinColumns = @JoinColumn(name = "author_fk"),
             inverseJoinColumns = @JoinColumn(name = "book_fk"))

@@ -5,6 +5,7 @@ import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.domain.BookGenre;
 import com.ikoval.libman.server.repository.AuthorRepository;
 import com.ikoval.libman.server.repository.BookGenreRepository;
+import com.ikoval.libman.server.repository.BookRepository;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.shared.dto.MyPageRequest;
 import com.ikoval.libman.shared.dto.MyPageResponse;
@@ -20,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,8 +32,16 @@ public class MyConversionService {
 
     BookGenreRepository bookGenreRepository;
 
+    BookRepository bookRepository;
+
     public Book convert(BookDto bookDto) {
         Book book = new Book();
+        if(bookDto.getId() != null) {
+            Optional<Book> opt = bookRepository.findById(bookDto.getId());
+            if(opt.isPresent()) {
+                book = opt.get();
+            }
+        }
         book.setTitle(bookDto.getTitle());
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (bookDto.getAddedDate() != null) {
@@ -101,7 +111,7 @@ public class MyConversionService {
         String[] authorsString = string.split(",");
         List<Author> list = new ArrayList<>();
         for(String s : authorsString) {
-            Author author = authorRepository.getByFullName(s);
+            Author author = authorRepository.findByFullName(s);
             if(author == null) {
                 author = new Author(s);
                 authorRepository.save(author);
