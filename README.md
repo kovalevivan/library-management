@@ -1,13 +1,21 @@
 # library-management
 ## Demo in Heroku
 
-- [Spring GWT Demo in Heroku](http://ikoval-library-management.herokuapp.com/)
+* [Demo in Heroku](http://ikoval-library-management.herokuapp.com/)
+ 
+ ```shell
+User: admin
+Password: admin
+```
 
-## Development
-1. H2 database
+## Introduction
+This is example Maven project for following frameworks:
 
-JDBC URL to use in memory database jdbc:h2:mem:testdb
+- User Interfaces (Client): 
+  - GWT
+  - RestyGWT
+- Controllers and Services (Server): 
+  - Spring Boot
+- Domains (Server): 
+  - JPA with Hibernate
 
-## Security
-* User: admin
-* Password: admin
