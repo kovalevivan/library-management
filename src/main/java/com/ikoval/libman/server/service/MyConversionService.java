@@ -1,5 +1,8 @@
 package com.ikoval.libman.server.service;
 
+import com.ikoval.libman.server.converter.BookConverter;
+import com.ikoval.libman.server.converter.MyPageRequestConverter;
+import com.ikoval.libman.server.converter.MyPageResponseConverter;
 import com.ikoval.libman.server.domain.Author;
 import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.domain.BookGenre;
@@ -28,11 +31,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MyConversionService {
 
-    AuthorRepository authorRepository;
+    private AuthorRepository authorRepository;
 
-    BookGenreRepository bookGenreRepository;
+    private BookGenreRepository bookGenreRepository;
 
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
+
 
     public Book convert(BookDto bookDto) {
         Book book = new Book();
@@ -61,53 +65,7 @@ public class MyConversionService {
         return book;
     }
 
-    public BookDto convert(Book book) {
-        BookDto bookDto = new BookDto();
-        bookDto.setId(book.getId());
-        bookDto.setTitle(book.getTitle());
-        bookDto.setPublisher(book.getPublisher());
-        bookDto.setYearOfPublishing(book.getYearOfPublishing());
-        bookDto.setGenres(
-                book.getGenres()
-                        .stream()
-                        .map(genre->genre.getName())
-                        .collect(Collectors.joining(", ")));
-        bookDto.setAuthors(
-                book.getAuthors()
-                        .stream()
-                        .map(author -> author.getFullName())
-                        .collect(Collectors.joining(", ")));
-        bookDto.setPages(book.getPages());
-        bookDto.setAddedDate(book.getAddedDate().toString());
-        return bookDto;
-    }
-
-    public PageRequest convert(MyPageRequest request) {
-        int size = request.getSize();
-        int page = request.getPage();
-        Sort.Direction direction =
-                Sort.Direction.fromString(request.getDirection());
-        String property = request.getProperty();
-
-        return PageRequest.of(
-                page,
-                size,
-                direction,
-                property);
-    }
-
-    public MyPageResponse<BookDto> convert(Page<Book> page) {
-        List<BookDto> bookDtos = page.stream()
-                .map(entity -> convert(entity))
-                .collect(Collectors.toList());
-        MyPageResponse<BookDto> response = new MyPageResponse<>();
-        response.setContent(bookDtos);
-        response.setTotalElements((int) page.getTotalElements());
-        response.setLast(page.isLast());
-        return response;
-    }
-
-    public List<Author> convertToListOfAuthors(String string) {
+    private List<Author> convertToListOfAuthors(String string) {
         String[] authorsString = string.split(",");
         List<Author> list = new ArrayList<>();
         for(String s : authorsString) {
@@ -121,7 +79,7 @@ public class MyConversionService {
         return list;
     }
 
-    public List<BookGenre> convertToListOfGenres(String string) {
+    private List<BookGenre> convertToListOfGenres(String string) {
         String[] genres = string.split(",");
         List<BookGenre> list = new ArrayList<>();
         for(String s : genres) {
