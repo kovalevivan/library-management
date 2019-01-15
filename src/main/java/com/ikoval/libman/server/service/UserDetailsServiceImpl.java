@@ -2,8 +2,6 @@ package com.ikoval.libman.server.service;
 
 import com.ikoval.libman.server.domain.MyUser;
 import com.ikoval.libman.server.repository.MyUserRepository;
-import lombok.AllArgsConstructor;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.InitBinder;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -21,7 +18,7 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    MyUserRepository userRepository;
+    private MyUserRepository userRepository;
 
     public UserDetailsServiceImpl() {
     }

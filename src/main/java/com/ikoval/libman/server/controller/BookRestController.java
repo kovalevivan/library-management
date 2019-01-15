@@ -17,7 +17,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Optional;
 
@@ -26,9 +33,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class BookRestController {
 
-    BookService bookService;
+    private BookService bookService;
 
-    MyConversionService conversionService;
+    private MyConversionService conversionService;
 
     @PostMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
     public MyPageResponse<BookDto> findBooksByPageRequest(@RequestBody MyPageRequest myPageRequest) {
@@ -49,7 +56,7 @@ public class BookRestController {
     @GetMapping(value = "/book/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public BookDto getBookById(@PathVariable Long id) {
         Optional<Book> bookOptional = bookService.getById(id);
-        Book book = bookOptional.isPresent() ? bookOptional.get() : new Book();
+        Book book = bookOptional.orElse(new Book());
         return BookConverter.convert(book);
     }
 
@@ -61,7 +68,7 @@ public class BookRestController {
 
     @PostMapping(value = "/book/save", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void saveBook(@RequestBody BookDto bookDto) throws Exception {
+    public void saveBook(@RequestBody BookDto bookDto)  {
         Book book = conversionService.convert(bookDto);
         bookService.save(book);
     }

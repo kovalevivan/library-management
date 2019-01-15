@@ -1,6 +1,5 @@
 package com.ikoval.libman.shared.dto;
 
-import java.util.List;
 
 public class BookDto {
 

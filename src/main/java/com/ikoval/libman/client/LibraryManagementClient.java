@@ -3,7 +3,10 @@ package com.ikoval.libman.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.ikoval.libman.client.model.BookTableModel;
 import com.ikoval.libman.client.ui.AddNewDialogBox;
 import com.ikoval.libman.client.ui.AdvancedSearchDialogBox;
@@ -29,13 +32,13 @@ public class LibraryManagementClient implements EntryPoint {
     RootPanel.get("gwtContainer").add(mainPanel);
     addButton.addClickHandler(new ClickHandler() {
       @Override
-      public void onClick(ClickEvent event) {
+      public void onClick(final ClickEvent event) {
         new AddNewDialogBox(bookTableModel).center();
       }
     });
     advancedSearch.addClickHandler(new ClickHandler() {
       @Override
-      public void onClick(ClickEvent event) {
+      public void onClick(final ClickEvent event) {
         new AdvancedSearchDialogBox(bookTableModel).center();
       }
     });

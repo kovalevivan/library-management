@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class BookSpecification implements Specification<Book> {
 
-    FilterCriteria criteria;
+    private FilterCriteria criteria;
 
     public BookSpecification(FilterCriteria criteria) {
         this.criteria = criteria;

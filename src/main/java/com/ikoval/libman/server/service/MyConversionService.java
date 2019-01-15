@@ -1,8 +1,5 @@
 package com.ikoval.libman.server.service;
 
-import com.ikoval.libman.server.converter.BookConverter;
-import com.ikoval.libman.server.converter.MyPageRequestConverter;
-import com.ikoval.libman.server.converter.MyPageResponseConverter;
 import com.ikoval.libman.server.domain.Author;
 import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.domain.BookGenre;
@@ -10,12 +7,7 @@ import com.ikoval.libman.server.repository.AuthorRepository;
 import com.ikoval.libman.server.repository.BookGenreRepository;
 import com.ikoval.libman.server.repository.BookRepository;
 import com.ikoval.libman.shared.dto.BookDto;
-import com.ikoval.libman.shared.dto.MyPageRequest;
-import com.ikoval.libman.shared.dto.MyPageResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -25,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor

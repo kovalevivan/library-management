@@ -3,15 +3,11 @@ package com.ikoval.libman.client.ui;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.shared.DateTimeFormat;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
-import com.google.gwt.user.client.ui.Button;
 import com.ikoval.libman.client.model.BookTableModel;
 import com.ikoval.libman.shared.dto.BookDto;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class AddNewDialogBox extends DialogBox {
 
@@ -31,13 +27,13 @@ public class AddNewDialogBox extends DialogBox {
     private TextBox genres = new TextBox();
 
 
-    public AddNewDialogBox(BookTableModel bookTableModel) {
+    public AddNewDialogBox(final BookTableModel bookTableModel) {
         this.bookTableModel = bookTableModel;
         setText("Add new Book");
         setAnimationEnabled(true);
 
         closeButton.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 hide();
             }
         });
@@ -65,10 +61,10 @@ public class AddNewDialogBox extends DialogBox {
         dialogVPanel.add(closeButton);
     }
 
-    void addEvents() {
+    private void addEvents() {
         saveButton.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 BookDto bookDto = new BookDto();
                 bookDto.setTitle(title.getText());
                 bookDto.setPages(Integer.parseInt(pages.getText()));

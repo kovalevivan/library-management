@@ -33,7 +33,7 @@ Web application for book management with the following features
 1. Server: Start the WebApp with Spring Boot
    
 2. Client: Start GWT SuperDev Mode transpiler
- ```java
+ ```shell
 mvn gwt:run-codeserver
 ```
 3. Go to the application URL with a web browser:

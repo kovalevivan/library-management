@@ -2,7 +2,14 @@ package com.ikoval.libman.server.domain;
 
 
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+import javax.persistence.ManyToMany;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;

@@ -25,14 +25,14 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
     private MyPageRequest myPageRequest = new MyPageRequest();
 
 
-    MethodCallback<MyPageResponse<BookDto>> callback = new MethodCallback<MyPageResponse<BookDto>>() {
+    private MethodCallback<MyPageResponse<BookDto>> callback = new MethodCallback<MyPageResponse<BookDto>>() {
         @Override
-        public void onFailure(Method method, Throwable throwable) {
+        public void onFailure(final Method method, final Throwable throwable) {
             Window.alert("Something went wrong");
         }
 
         @Override
-        public void onSuccess(Method method, MyPageResponse<BookDto> bookDtoMyPageResponse) {
+        public void onSuccess(final Method method, final MyPageResponse<BookDto> bookDtoMyPageResponse) {
             list = bookDtoMyPageResponse.getContent();
             boolean isLast = bookDtoMyPageResponse.getLast();
             updateRowCount(bookDtoMyPageResponse.getTotalElements(),isLast);
@@ -44,7 +44,7 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
     }
 
     @Override
-    protected void onRangeChanged(HasData<BookDto> display) {
+    protected void onRangeChanged(final HasData<BookDto> display) {
         final Range range = display.getVisibleRange();
 
         int start = range.getStart();
@@ -66,12 +66,12 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
         }
     }
 
-    public void setSorting(String property, String direction) {
+    public void setSorting(final String property, final String direction) {
         myPageRequest.setProperty(property);
         myPageRequest.setDirection(direction);
     }
 
-    public void setFilter(FilterCriteria filter) {
+    public void setFilter(final FilterCriteria filter) {
         myPageRequest.setFilter(filter);
         refresh();
     }
@@ -88,15 +88,15 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
         refresh();
     }
 
-    public void save(BookDto bookDto) {
+    public void save(final BookDto bookDto) {
         server.saveBook(bookDto, new MethodCallback() {
             @Override
-            public void onFailure(Method method, Throwable exception) {
+            public void onFailure(final Method method, final Throwable exception) {
                 Window.alert(exception.toString());
             }
 
             @Override
-            public void onSuccess(Method method, Object response) {
+            public void onSuccess(final Method method, final Object response) {
                 list.add(bookDto);
                 refresh();
                 Window.alert("Book was saved");
@@ -104,15 +104,15 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
         });
     }
 
-    public void delete(BookDto bookDto) {
+    public void delete(final BookDto bookDto) {
         MethodCallback callback = new MethodCallback() {
             @Override
-            public void onFailure(Method method, Throwable exception) {
+            public void onFailure(final Method method, final Throwable exception) {
                 Window.alert("Something went wrong");
             }
 
             @Override
-            public void onSuccess(Method method, Object response) {
+            public void onSuccess(final Method method, final Object response) {
                 list.remove(bookDto);
                 refresh();
                 Window.alert("Book was successfully deleted");

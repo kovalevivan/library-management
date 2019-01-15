@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -106,7 +107,7 @@ public class BookRestControllerTest {
 
         pageRequest = MyPageRequestConverter.convert(myPageRequest);
 
-        pageResponse = new PageImpl<>(Arrays.asList(book),pageRequest,1);
+        pageResponse = new PageImpl<>(Collections.singletonList(book),pageRequest,1);
 
         filterCriteria = new FilterCriteria();
         filterCriteria.setBookTitle(book.getTitle());

@@ -1,8 +1,10 @@
 package com.ikoval.libman.server.domain;
 
-import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToMany;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,14 +21,10 @@ public class Author {
     public Author() {
     }
 
-    public Author(String fullName) {
+    public Author(final String fullName) {
         this.fullName = fullName;
     }
 
-    public Author(String fullName, List<Book> writtenByAuthor) {
-        this.fullName = fullName;
-        this.writtenByAuthor = writtenByAuthor;
-    }
 
     public Long getId() {
         return id;

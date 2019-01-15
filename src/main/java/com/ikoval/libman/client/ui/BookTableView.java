@@ -2,38 +2,36 @@ package com.ikoval.libman.client.ui;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.cellview.client.*;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.ikoval.libman.client.model.BookTableModel;
-import com.ikoval.libman.client.domain.LibraryManagementClient;
-import com.ikoval.libman.client.domain.RestLibraryManagementClient;
 import com.ikoval.libman.shared.dto.BookDto;
 
 public class BookTableView extends Composite {
 
-    private final LibraryManagementClient server = GWT.create(RestLibraryManagementClient.class);
+    private BookTableModel dataProvider;
 
-    BookTableModel dataProvider;
+    private CellTable<BookDto> cellTable = new CellTable<>();
 
-    CellTable<BookDto> cellTable = new CellTable<>();
-
-    SimplePager pager;
+    private SimplePager pager;
 
     private final static int DEFAULT_PAGE_SIZE = 10;
 
-    public BookTableView(BookTableModel bookTableModel) {
+    public BookTableView(final BookTableModel bookTableModel) {
         dataProvider = bookTableModel;
         dataProvider.addDataDisplay(cellTable);
         cellTable.setEmptyTableWidget(new Label("No Data"));
         init();
     }
 
-    public void init() {
+    private void init() {
 
         initTableColumns(cellTable);
         addColumnSorting(cellTable);
@@ -46,7 +44,7 @@ public class BookTableView extends Composite {
         initWidget(panel);
     }
 
-    private void initTableColumns(CellTable<BookDto> table){
+    private void initTableColumns(final CellTable<BookDto> table){
 
         table.setWidth("100%");
         table.setAutoHeaderRefreshDisabled(true);
@@ -55,7 +53,7 @@ public class BookTableView extends Composite {
         //ID
         TextColumn<BookDto> idColumn = new TextColumn<BookDto>() {
             @Override
-            public String getValue(BookDto object) { return object.getId().toString(); }
+            public String getValue(final BookDto object) { return object.getId().toString(); }
         };
         idColumn.setDataStoreName("id");
         idColumn.setSortable(true);
@@ -64,7 +62,7 @@ public class BookTableView extends Composite {
         //Title
         TextColumn<BookDto> titleColumn = new TextColumn<BookDto>() {
             @Override
-            public String getValue(BookDto object) { return object.getTitle(); }
+            public String getValue(final BookDto object) { return object.getTitle(); }
         };
         titleColumn.setDataStoreName("title");
         titleColumn.setSortable(true);
@@ -73,7 +71,7 @@ public class BookTableView extends Composite {
         //Authors
         TextColumn<BookDto> authorsColumn = new TextColumn<BookDto>() {
             @Override
-            public String getValue(BookDto object) {
+            public String getValue(final BookDto object) {
                 return object.getAuthors();
             }
         };
@@ -84,7 +82,7 @@ public class BookTableView extends Composite {
         //Number of pages
         TextColumn<BookDto> numberOfPagesColumn = new TextColumn<BookDto>() {
             @Override
-            public String getValue(BookDto object) { return object.getPages().toString(); }
+            public String getValue(final BookDto object) { return object.getPages().toString(); }
         };
         numberOfPagesColumn.setSortable(true);
         numberOfPagesColumn.setDataStoreName("pages");
@@ -93,7 +91,7 @@ public class BookTableView extends Composite {
         //Publisher
         TextColumn<BookDto> publisher = new TextColumn<BookDto>() {
             @Override
-            public String getValue(BookDto object) { return object.getPublisher(); }
+            public String getValue(final BookDto object) { return object.getPublisher(); }
         };
         publisher.setDataStoreName("publisher");
         publisher.setSortable(true);
@@ -102,7 +100,7 @@ public class BookTableView extends Composite {
         //Year of publishing
         TextColumn<BookDto> yearOfPublishing = new TextColumn<BookDto>() {
             @Override
-            public String getValue(BookDto object) { return object.getYearOfPublishing().toString(); }
+            public String getValue(final BookDto object) { return object.getYearOfPublishing().toString(); }
         };
         yearOfPublishing.setDataStoreName("yearOfPublishing");
         yearOfPublishing.setSortable(true);
@@ -111,7 +109,7 @@ public class BookTableView extends Composite {
         //Genres
         TextColumn<BookDto> genres = new TextColumn<BookDto>() {
             @Override
-            public String getValue(BookDto object) { return object.getGenres(); }
+            public String getValue(final BookDto object) { return object.getGenres(); }
         };
         genres.setDataStoreName("genres");
 /*        genres.setSortable(true);*/
@@ -120,7 +118,7 @@ public class BookTableView extends Composite {
         //Date when book was added to database
         TextColumn<BookDto> addedDate = new TextColumn<BookDto>() {
             @Override
-            public String getValue(BookDto object) { return object.getAddedDate(); }
+            public String getValue(final BookDto object) { return object.getAddedDate(); }
         };
         addedDate.setSortable(true);
         addedDate.setDataStoreName("addedDate");
@@ -129,22 +127,22 @@ public class BookTableView extends Composite {
         //Delete button
         Column<BookDto, String> deleteButton = new Column<BookDto, String>(new ButtonCell()) {
             @Override
-            public String getValue(BookDto object) { return "x"; }
+            public String getValue(final BookDto object) { return "x"; }
         };
         table.addColumn(deleteButton , "");
         deleteButton.setFieldUpdater(new FieldUpdater<BookDto, String>() {
             @Override
-            public void update(int index, BookDto object, String value) {
+            public void update(final int index, final BookDto object, final String value) {
                 dataProvider.delete(object);
             }
         });
 
     }
 
-    private void addColumnSorting(CellTable<BookDto> table) {
+    private void addColumnSorting(final CellTable<BookDto> table) {
         ColumnSortEvent.AsyncHandler handler = new ColumnSortEvent.AsyncHandler(cellTable)  {
             @Override
-            public void onColumnSort(ColumnSortEvent event) {
+            public void onColumnSort(final ColumnSortEvent event) {
 /*                Window.alert("Column sort event");*/
                 String name = event.getColumn().getDataStoreName();
                 if (event.isSortAscending()) {
@@ -159,7 +157,7 @@ public class BookTableView extends Composite {
 
     }
 
-    private void addPagination(CellTable<BookDto> table) {
+    private void addPagination(final CellTable<BookDto> table) {
         this.pager = new SimplePager();
         pager.setDisplay(table);
         pager.setPageSize(DEFAULT_PAGE_SIZE);

@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 
 public class MyPageResponseConverter {
 
-    public static MyPageResponse<BookDto> convert(Page<Book> page) {
+    public static MyPageResponse<BookDto> convert(final Page<Book> page) {
         List<BookDto> bookDtos = page.stream()
-                .map(entity -> BookConverter.convert(entity))
+                .map(BookConverter::convert)
                 .collect(Collectors.toList());
         MyPageResponse<BookDto> response = new MyPageResponse<>();
         response.setContent(bookDtos);

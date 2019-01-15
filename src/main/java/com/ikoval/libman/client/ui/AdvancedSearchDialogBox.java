@@ -2,19 +2,16 @@ package com.ikoval.libman.client.ui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.ikoval.libman.client.model.BookTableModel;
 import com.ikoval.libman.shared.FilterCriteria;
-import com.ikoval.libman.shared.dto.BookDto;
 
 public class AdvancedSearchDialogBox extends DialogBox {
 
-    private final String AUTHOR_DUMMY = "Not working yet";
 
-    BookTableModel bookTableModel;
+    private BookTableModel bookTableModel;
 
-    FilterCriteria filter;
+    private FilterCriteria filter;
 
     private VerticalPanel dialogVPanel = new VerticalPanel();
 
@@ -28,14 +25,14 @@ public class AdvancedSearchDialogBox extends DialogBox {
 
 
 
-    public AdvancedSearchDialogBox(BookTableModel bookTableModel) {
+    public AdvancedSearchDialogBox(final BookTableModel bookTableModel) {
         this.bookTableModel = bookTableModel;
         filter = this.bookTableModel.getFilter();
         setText("Advanced Search");
         setAnimationEnabled(true);
 
         closeButton.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 hide();
             }
         });
@@ -63,15 +60,15 @@ public class AdvancedSearchDialogBox extends DialogBox {
     private void addEvents() {
         searchButton.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 filter.clear();
-                if(title.getText() != "") {
+                if(!title.getText().isEmpty()) {
                     filter.setBookTitle(title.getText());
                 }
-                if(author.getText() != "") {
+                if(!author.getText().isEmpty()) {
                     filter.setAuthorName(author.getText());
                 }
-                if(genre.getText() != "") {
+                if(!genre.getText().isEmpty()) {
                     filter.setGenre(genre.getText());
                 }
                 bookTableModel.setFilter(filter);
@@ -81,7 +78,7 @@ public class AdvancedSearchDialogBox extends DialogBox {
 
         clearButton.addClickHandler(new ClickHandler() {
             @Override
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 bookTableModel.clearFilter();
                 title.setValue("");
                 author.setValue("");

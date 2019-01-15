@@ -2,7 +2,11 @@ package com.ikoval.libman.server.domain;
 
 import lombok.Data;
 
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToMany;
 import java.util.List;
 import java.util.Objects;
 

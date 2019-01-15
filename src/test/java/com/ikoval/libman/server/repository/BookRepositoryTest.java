@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RunWith(SpringRunner.class) // provide bridge between SpringBoot test features and JUnit, for usage of springboot tsting features
+@RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations= "classpath:application-test.properties")
 public class BookRepositoryTest {
@@ -34,7 +34,7 @@ public class BookRepositoryTest {
     @Autowired
     private BookRepository repository;
 
-    Book book;
+    private Book book;
 
 
     @Before
@@ -54,10 +54,12 @@ public class BookRepositoryTest {
         book.setAddedDate(new Date(new java.util.Date().getTime()));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void shouldSaveAndFindById() {
         repository.save(book);
         Optional<Book> foundBook = repository.findById(book.getId());
+        Assert.assertTrue(foundBook.isPresent());
         Assert.assertEquals(book, foundBook.get());
     }
 
