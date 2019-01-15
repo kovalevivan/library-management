@@ -18,6 +18,8 @@ This is a single-page web application with REST API backend. The aim was to try 
 - Client
   - GWT
   - RestyGWT
+- Documentation
+  - Swagger UI
   
 ##  What was implemented
 Web application for book management with the following features
