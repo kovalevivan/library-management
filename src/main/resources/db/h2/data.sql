@@ -1,3 +1,5 @@
+INSERT INTO PUBLIC."user"("id","name","password","role") VALUES (0,'admin','$2a$10$8AAKm6KE0URtcgclZvsX4.HtXZQgn6fZtnXF4djF2zR75B9SYdpym', 'ADMIN');
+
 INSERT INTO PUBLIC."author"("id","full_name") VALUES
                                                      (-16, 'Author16'),
                                                      (-15, 'Author15'),

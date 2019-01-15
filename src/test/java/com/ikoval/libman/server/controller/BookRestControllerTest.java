@@ -68,7 +68,7 @@ public class BookRestControllerTest {
 
     private FilterCriteria filterCriteria;
 
-    private Specification<Book> spec;
+
 
     @Before
     public void setUp() {
@@ -114,8 +114,6 @@ public class BookRestControllerTest {
         filterCriteria.setAuthorName("Author2");
         myPageRequest.setFilter(filterCriteria);
 
-        spec = MySpecification.filterBook(filterCriteria);
-
     }
 
     public static String asJsonString(final Object obj) {
@@ -140,7 +138,11 @@ public class BookRestControllerTest {
     @Test
     public void testFindBookByPageRequestWithFiltering() throws Exception {
 
-/*        when(bookService.findAll(spec,pageRequest)).thenReturn(pageResponse);
+/*        Specification<Book> spec = MySpecification.filterBook(filterCriteria);
+
+        when(bookService.findAll(spec,pageRequest)).thenReturn(pageResponse);
+
+        Page page = bookService.findAll(spec,pageRequest);
 
         mockMvc.perform(post("/libman/api/books/filter")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

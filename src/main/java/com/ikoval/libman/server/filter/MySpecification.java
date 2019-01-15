@@ -39,7 +39,9 @@ public class MySpecification {
         };
     }
 
-    public static String getLikePattern(String search) {
+    private static String getLikePattern(String search) {
         return "%" + search.toLowerCase() + "%";
     }
+
+
 }

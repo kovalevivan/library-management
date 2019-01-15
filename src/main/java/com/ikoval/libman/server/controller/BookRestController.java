@@ -42,7 +42,7 @@ public class BookRestController {
         PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
         FilterCriteria filter = myPageRequest.getFilter();
         Specification<Book> spec = MySpecification.filterBook(filter);
-        Page<Book> pageResponse = bookService.findAll(spec,pageRequest);
+        Page pageResponse = bookService.findAll(spec,pageRequest);
         return MyPageResponseConverter.convert(pageResponse);
     }
 
@@ -61,7 +61,7 @@ public class BookRestController {
 
     @PostMapping(value = "/book/save", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void saveBook(@RequestBody BookDto bookDto) {
+    public void saveBook(@RequestBody BookDto bookDto) throws Exception {
         Book book = conversionService.convert(bookDto);
         bookService.save(book);
     }

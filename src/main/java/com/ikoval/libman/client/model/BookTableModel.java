@@ -92,7 +92,7 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
         server.saveBook(bookDto, new MethodCallback() {
             @Override
             public void onFailure(Method method, Throwable exception) {
-                Window.alert("Something went wrong");
+                Window.alert(exception.toString());
             }
 
             @Override
