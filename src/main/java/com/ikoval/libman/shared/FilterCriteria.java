@@ -1,5 +1,7 @@
 package com.ikoval.libman.shared;
 
+import java.util.Objects;
+
 public class FilterCriteria {
 
     private String authorName;
@@ -88,5 +90,25 @@ public class FilterCriteria {
         yearOfPublishingAfter = null;
         numberOfPagesGreaterThan = null;
         numberOfPagesLessThan = null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FilterCriteria)) return false;
+        FilterCriteria that = (FilterCriteria) o;
+        return Objects.equals(getAuthorName(), that.getAuthorName()) &&
+                Objects.equals(getBookTitle(), that.getBookTitle()) &&
+                Objects.equals(getGenre(), that.getGenre()) &&
+                Objects.equals(getPublisher(), that.getPublisher()) &&
+                Objects.equals(getYearOfPublishingBefore(), that.getYearOfPublishingBefore()) &&
+                Objects.equals(getYearOfPublishingAfter(), that.getYearOfPublishingAfter()) &&
+                Objects.equals(getNumberOfPagesLessThan(), that.getNumberOfPagesLessThan()) &&
+                Objects.equals(getNumberOfPagesGreaterThan(), that.getNumberOfPagesGreaterThan());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAuthorName(), getBookTitle(), getGenre(), getPublisher(), getYearOfPublishingBefore(), getYearOfPublishingAfter(), getNumberOfPagesLessThan(), getNumberOfPagesGreaterThan());
     }
 }

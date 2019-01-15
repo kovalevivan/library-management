@@ -3,7 +3,7 @@ package com.ikoval.libman.server.service;
 import com.ikoval.libman.server.domain.Author;
 import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.domain.BookGenre;
-import com.ikoval.libman.server.filter.MySpecification;
+import com.ikoval.libman.server.filter.BookSpecification;
 import com.ikoval.libman.server.repository.BookRepository;
 import com.ikoval.libman.shared.FilterCriteria;
 import org.junit.Assert;
@@ -92,7 +92,7 @@ public class BookServiceTest {
         filterCriteria.setBookTitle(book.getTitle());
         filterCriteria.setGenre("Genre1");
         filterCriteria.setAuthorName("Author2");
-        Specification<Book> spec = MySpecification.filterBook(filterCriteria);
+        Specification<Book> spec = new BookSpecification(filterCriteria);
 
         when(bookRepository.findAll(spec,pageRequest)).thenReturn(page);
 

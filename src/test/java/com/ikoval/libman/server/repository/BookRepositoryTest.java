@@ -4,7 +4,7 @@ package com.ikoval.libman.server.repository;
 import com.ikoval.libman.server.domain.Author;
 import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.domain.BookGenre;
-import com.ikoval.libman.server.filter.MySpecification;
+import com.ikoval.libman.server.filter.BookSpecification;
 import com.ikoval.libman.shared.FilterCriteria;
 import org.junit.Assert;
 import org.junit.Before;
@@ -107,7 +107,7 @@ public class BookRepositoryTest {
         filter.setBookTitle("book54");
         filter.setAuthorName("author1");
         filter.setGenre("Genre1");
-        Specification<Book> spec = MySpecification.filterBook(filter);
+        Specification<Book> spec = new BookSpecification(filter);
         repository.save(book);
         Page<Book> bookResponse = repository.findAll(spec,PageRequest.of(0,10));
 

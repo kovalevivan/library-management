@@ -5,7 +5,7 @@ import com.ikoval.libman.server.converter.MyPageRequestConverter;
 import com.ikoval.libman.server.domain.Author;
 import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.domain.BookGenre;
-import com.ikoval.libman.server.filter.MySpecification;
+import com.ikoval.libman.server.filter.BookSpecification;
 import com.ikoval.libman.server.service.BookService;
 import com.ikoval.libman.server.service.MyConversionService;
 import com.ikoval.libman.shared.FilterCriteria;
@@ -138,20 +138,26 @@ public class BookRestControllerTest {
     @Test
     public void testFindBookByPageRequestWithFiltering() throws Exception {
 
-/*        Specification<Book> spec = MySpecification.filterBook(filterCriteria);
+
+        Specification<Book> spec = new BookSpecification(filterCriteria);
 
         when(bookService.findAll(spec,pageRequest)).thenReturn(pageResponse);
-
-        Page page = bookService.findAll(spec,pageRequest);
 
         mockMvc.perform(post("/libman/api/books/filter")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(asJsonString(myPageRequest)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.content",isA(List.class)))
-                .andExpect(jsonPath("$.totalElements",is(pageResponse.getTotalElements())))
-                .andExpect(jsonPath("$.isLast",is(pageResponse.isLast())));*/
+                .andExpect(jsonPath("$.content[0].id",is((bookDto.getId().intValue()))))
+                .andExpect(jsonPath("$.content[0].title",is(bookDto.getTitle())))
+                .andExpect(jsonPath("$.content[0].publisher",is(bookDto.getPublisher())))
+                .andExpect(jsonPath("$.content[0].authors",is(bookDto.getAuthors())))
+                .andExpect(jsonPath("$.content[0].genres",is(bookDto.getGenres())))
+                .andExpect(jsonPath("$.content[0].yearOfPublishing",is(bookDto.getYearOfPublishing())))
+                .andExpect(jsonPath("$.content[0].pages",is(bookDto.getPages())))
+                .andExpect(jsonPath("$.content[0].addedDate",is(bookDto.getAddedDate())))
+                .andExpect(jsonPath("$.totalElements",is((int) pageResponse.getTotalElements())))
+                .andExpect(jsonPath("$.last",is(pageResponse.isLast())));
     }
 
     @Test

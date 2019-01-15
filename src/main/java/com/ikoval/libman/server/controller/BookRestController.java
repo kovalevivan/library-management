@@ -4,7 +4,7 @@ import com.ikoval.libman.server.converter.BookConverter;
 import com.ikoval.libman.server.converter.MyPageRequestConverter;
 import com.ikoval.libman.server.converter.MyPageResponseConverter;
 import com.ikoval.libman.server.domain.Book;
-import com.ikoval.libman.server.filter.MySpecification;
+import com.ikoval.libman.server.filter.BookSpecification;
 import com.ikoval.libman.server.service.BookService;
 import com.ikoval.libman.server.service.MyConversionService;
 import com.ikoval.libman.shared.FilterCriteria;
@@ -41,7 +41,7 @@ public class BookRestController {
     public MyPageResponse<BookDto> findBookByPageRequestWithFilter(@RequestBody MyPageRequest myPageRequest) {
         PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
         FilterCriteria filter = myPageRequest.getFilter();
-        Specification<Book> spec = MySpecification.filterBook(filter);
+        Specification<Book> spec = new BookSpecification(filter);
         Page pageResponse = bookService.findAll(spec,pageRequest);
         return MyPageResponseConverter.convert(pageResponse);
     }
