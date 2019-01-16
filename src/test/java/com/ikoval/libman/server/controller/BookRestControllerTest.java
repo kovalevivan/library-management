@@ -163,7 +163,7 @@ public class BookRestControllerTest {
 
     @Test
     public void testGetBookById() throws Exception {
-        when(bookService.getById(book.getId())).thenReturn(Optional.of(book));
+        when(bookService.getById(book.getId())).thenReturn(book);
         mockMvc.perform(get("/libman/api/book/123"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())

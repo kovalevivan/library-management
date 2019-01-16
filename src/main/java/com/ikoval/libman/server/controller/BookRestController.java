@@ -4,6 +4,7 @@ import com.ikoval.libman.server.converter.BookConverter;
 import com.ikoval.libman.server.converter.MyPageRequestConverter;
 import com.ikoval.libman.server.converter.MyPageResponseConverter;
 import com.ikoval.libman.server.domain.Book;
+import com.ikoval.libman.server.exception.BadRequestException;
 import com.ikoval.libman.server.filter.BookSpecification;
 import com.ikoval.libman.server.service.BookService;
 import com.ikoval.libman.server.service.MyConversionService;
@@ -54,15 +55,13 @@ public class BookRestController {
     }
 
     @GetMapping(value = "/book/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookDto getBookById(@PathVariable Long id) {
-        Optional<Book> bookOptional = bookService.getById(id);
-        Book book = bookOptional.orElse(new Book());
-        return BookConverter.convert(book);
+    public BookDto getBookById(@PathVariable Long id) throws BadRequestException {
+        return BookConverter.convert(bookService.getById(id));
     }
 
     @DeleteMapping(value = "/book/delete", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBook(@RequestBody BookDto bookDto) {
+    public void deleteBook(@RequestBody BookDto bookDto) throws BadRequestException {
         bookService.delete(bookDto.getId());
     }
 

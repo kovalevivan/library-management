@@ -18,9 +18,6 @@ public interface BookRepository extends PagingAndSortingRepository<Book,Long>, J
 
     Optional<Book> findById(Long id);
 
-    Book save(Book book);
-
-    void deleteById(Long id);
 
 
 
