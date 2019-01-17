@@ -35,7 +35,8 @@ INSERT INTO PUBLIC."book"("id","added","pages","publisher","title","year") VALUE
                                                (-4,TIMESTAMP '2018-12-27',400,'Publisher4', 'Book4',2015),
                                                (-3,TIMESTAMP '2018-12-28',300,'Publisher3', 'Book3',2016),
                                                (-2,TIMESTAMP '2018-12-29',200,'Publisher2', 'Book2',2017),
-                                               (-1,TIMESTAMP '2018-12-30',100,'Publisher1', 'Book1',2018);
+                                               (-1,TIMESTAMP '2018-12-30',100,'Publisher1', 'Book1',2018),
+                                               (1,TIMESTAMP '2018-12-30',10,'Publisher1', 'Test book',2018);
 
 INSERT INTO PUBLIC."jnd_author_book"("author_fk","book_fk") VALUES
                                                                    (-16,-16),

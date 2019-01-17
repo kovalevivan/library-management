@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Validates parameters and retrieves from database
+ *
+ */
+
 @Service
 @AllArgsConstructor
 public class BookService {
@@ -33,7 +38,7 @@ public class BookService {
      * @throws BadRequestException in case the given id wasn't found.
      */
 
-    public Book getById(Long id) throws BadRequestException {
+    public Book findById(Long id) throws BadRequestException {
         Optional<Book> opt = bookRepository.findById(id);
         return opt.orElseThrow(() -> new BadRequestException("Book not found"));
     }
@@ -43,9 +48,11 @@ public class BookService {
      *
      * @param book must not be {@literal null}.
      * @return the saved book will never be {@literal null}.
+     * @throws IllegalArgumentException in case the given {@code book} is {@literal null}
      */
 
-    public Book save(Book book) {
+    public Book save(Book book) throws IllegalArgumentException {
+        if(book == null) throw new IllegalArgumentException("Field book must not be null");
         return bookRepository.save(book);
     }
 
@@ -53,15 +60,12 @@ public class BookService {
      * Deletes book by it id.
      *
      * @param id must not be {@literal null}.
-     * @throws BadRequestException in case the given {@code id} is {@literal null}
+     * @throws IllegalArgumentException in case the given {@code id} is {@literal null}
      */
 
-    public void delete(Long id) throws BadRequestException{
-        try {
-            bookRepository.deleteById(id);
-        } catch (IllegalArgumentException e) {
-            throw new BadRequestException("Wrong id");
-        }
+    public void delete(Long id) throws IllegalArgumentException {
+        if(id == null) throw new IllegalArgumentException("Field id must not be null");
+        bookRepository.deleteById(id);
     }
 
 

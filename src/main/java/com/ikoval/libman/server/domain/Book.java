@@ -2,14 +2,7 @@ package com.ikoval.libman.server.domain;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.ManyToMany;
-import javax.persistence.CascadeType;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +11,7 @@ import java.util.Objects;
 @Entity
 public class Book {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String title;
     private String publisher;

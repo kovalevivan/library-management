@@ -5,13 +5,10 @@ import com.ikoval.libman.shared.dto.MyPageResponse;
 import com.ikoval.libman.shared.dto.MyPageRequest;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.DELETE;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 
@@ -27,16 +24,16 @@ public interface RestLibraryManagementClient extends LibraryManagementClient, Re
     @Override
     @DELETE
     @Path("/api/book/delete")
-    void deleteBook(BookDto bookDto, MethodCallback callback);
+    void deleteBook(@QueryParam("id") Long id, MethodCallback callback);
 
     @Override
     @POST
     @Path("/api/books")
-    void findAllBook(@RequestBody MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
+    void findAllBook(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
 
     @Override
     @POST
     @Path("/api/books/filter")
-    void findAllBookWithFilter(@RequestBody MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
+    void findAllBookWithFilter(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
 
 }

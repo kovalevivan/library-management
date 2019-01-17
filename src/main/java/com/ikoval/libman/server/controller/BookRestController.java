@@ -18,16 +18,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import javax.validation.Valid;
+
+/**
+ * REST Controller for {@link com.ikoval.libman.server.domain.Book} entity
+ *
+ * @author Ivan Kovalev
+ */
+
 
 @RestController
 @RequestMapping("libman/api")
@@ -38,6 +38,13 @@ public class BookRestController {
 
     private MyConversionService conversionService;
 
+    /**
+     * Retrieved books with pagination and sorting
+     *
+     * @param myPageRequest must not be {@literal null}
+     * @return response satisfying by given {@code myPageRequest}
+     */
+
     @PostMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
     public MyPageResponse<BookDto> findBooksByPageRequest(@RequestBody MyPageRequest myPageRequest) {
         PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
@@ -45,29 +52,60 @@ public class BookRestController {
         return MyPageResponseConverter.convert(pageResponse);
     }
 
+    /**
+     * Retrieved books with pagination, sorting and filtering
+     *
+     * @param myPageRequest must not be {@literal null}
+     * @return response satisfying by given {@code myPageRequest}
+     * @throws BadRequestException if {@code filter} is null
+     */
+
     @PostMapping(value = "/books/filter", produces = MediaType.APPLICATION_JSON_VALUE)
-    public MyPageResponse<BookDto> findBookByPageRequestWithFilter(@RequestBody MyPageRequest myPageRequest) {
+    public MyPageResponse<BookDto> findBookByPageRequestWithFilter(@RequestBody MyPageRequest myPageRequest) throws BadRequestException {
         PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
         FilterCriteria filter = myPageRequest.getFilter();
+        if(filter == null) throw new BadRequestException("Filter must not be null");
         Specification<Book> spec = new BookSpecification(filter);
         Page pageResponse = bookService.findAll(spec,pageRequest);
         return MyPageResponseConverter.convert(pageResponse);
     }
 
+    /**
+     * Retrieved book by given id
+     *
+     * @param id must not be {@literal null}
+     * @return BookDto with given id
+     * @throws BadRequestException in case when book wasn't found
+     */
+
     @GetMapping(value = "/book/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public BookDto getBookById(@PathVariable Long id) throws BadRequestException {
-        return BookConverter.convert(bookService.getById(id));
+        return BookConverter.convert(bookService.findById(id));
     }
 
-    @DeleteMapping(value = "/book/delete", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /**
+     * Delete book by given {@code id}
+     *
+     * @param id must not be {@literal null}
+     * @throws BadRequestException in case when book wasn't found
+     */
+
+    @DeleteMapping(value = "/book/delete")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBook(@RequestBody BookDto bookDto) throws BadRequestException {
-        bookService.delete(bookDto.getId());
+    public void deleteBook(@RequestParam Long id) throws BadRequestException {
+        bookService.findById(id);
+        bookService.delete(id);
     }
+
+    /**
+     * Saves book
+     *
+     * @param bookDto must not be {@literal} null
+     */
 
     @PostMapping(value = "/book/save", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void saveBook(@RequestBody BookDto bookDto)  {
+    public void saveBook(@Valid @RequestBody BookDto bookDto) {
         Book book = conversionService.convert(bookDto);
         bookService.save(book);
     }

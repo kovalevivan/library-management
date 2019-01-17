@@ -16,6 +16,11 @@ public class BookSpecification implements Specification<Book> {
 
     private FilterCriteria criteria;
 
+    /**
+     *
+     * @param criteria must not be null
+     */
+
     public BookSpecification(FilterCriteria criteria) {
         this.criteria = criteria;
     }

@@ -11,12 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -31,21 +28,9 @@ public class MyConversionService {
 
     public Book convert(BookDto bookDto) {
         Book book = new Book();
-        if(bookDto.getId() != null) {
-            Optional<Book> opt = bookRepository.findById(bookDto.getId());
-            if(opt.isPresent()) {
-                book = opt.get();
-            }
-        }
+        if(bookDto.getId() != null) book.setId(bookDto.getId());
         book.setTitle(bookDto.getTitle());
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        if (bookDto.getAddedDate() != null) {
-            try {
-                book.setAddedDate(new Date(sdf.parse(bookDto.getAddedDate()).getTime()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
+        book.setAddedDate(new Date(new java.util.Date().getTime()));
         book.setPublisher(bookDto.getPublisher());
         book.setPages(bookDto.getPages());
         book.setYearOfPublishing(bookDto.getYearOfPublishing());

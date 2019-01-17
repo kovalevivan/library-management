@@ -29,7 +29,6 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.core.Is.isA;
@@ -163,7 +162,7 @@ public class BookRestControllerTest {
 
     @Test
     public void testGetBookById() throws Exception {
-        when(bookService.getById(book.getId())).thenReturn(book);
+        when(bookService.findById(book.getId())).thenReturn(book);
         mockMvc.perform(get("/libman/api/book/123"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -184,11 +183,10 @@ public class BookRestControllerTest {
 
     @Test
     public void testDeleteBook() throws Exception {
-        mockMvc.perform(delete("/libman/api/book/delete")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(asJsonString(bookDto)))
+        mockMvc.perform(delete("/libman/api/book/delete?id=" + bookDto.getId()))
                 .andExpect(status().isOk());
     }
+
 
     @Test
     public void testSaveBook() throws Exception {

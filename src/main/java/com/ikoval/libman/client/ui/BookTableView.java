@@ -51,13 +51,13 @@ public class BookTableView extends Composite {
         table.setAutoFooterRefreshDisabled(true);
 
         //ID
-        TextColumn<BookDto> idColumn = new TextColumn<BookDto>() {
+/*        TextColumn<BookDto> idColumn = new TextColumn<BookDto>() {
             @Override
             public String getValue(final BookDto object) { return object.getId().toString(); }
         };
         idColumn.setDataStoreName("id");
         idColumn.setSortable(true);
-        table.addColumn(idColumn,"Id");
+        table.addColumn(idColumn,"Id");*/
 
         //Title
         TextColumn<BookDto> titleColumn = new TextColumn<BookDto>() {
@@ -122,7 +122,7 @@ public class BookTableView extends Composite {
         };
         addedDate.setSortable(true);
         addedDate.setDataStoreName("addedDate");
-        table.addColumn(addedDate , "Added");
+        table.addColumn(addedDate , "Updated");
 
         //Delete button
         Column<BookDto, String> deleteButton = new Column<BookDto, String>(new ButtonCell()) {

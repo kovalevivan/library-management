@@ -11,7 +11,7 @@ public interface LibraryManagementClient {
 
     void saveBook(BookDto bookDto, MethodCallback callback);
 
-    void deleteBook(BookDto bookDto, MethodCallback callback);
+    void deleteBook(Long id, MethodCallback callback);
 
     void findAllBook(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
 

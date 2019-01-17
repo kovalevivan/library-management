@@ -3,10 +3,7 @@ package com.ikoval.libman.server.domain;
 import lombok.Data;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +12,7 @@ import java.util.Objects;
 public class BookGenre {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name;
 

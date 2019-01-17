@@ -92,7 +92,7 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
         server.saveBook(bookDto, new MethodCallback() {
             @Override
             public void onFailure(final Method method, final Throwable exception) {
-                Window.alert(exception.toString());
+                Window.alert(method.getResponse().getText());
             }
 
             @Override
@@ -118,6 +118,6 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
                 Window.alert("Book was successfully deleted");
             }
         };
-        server.deleteBook(bookDto, callback);
+        server.deleteBook(bookDto.getId(), callback);
     }
 }
