@@ -14,7 +14,6 @@ public interface BookRepository extends PagingAndSortingRepository<Book,Long>, J
 
     Page<Book> findAll(Pageable pageable);
 
-    Page<Book> findAll(Specification<Book> spec, Pageable pageable);
 
     Optional<Book> findById(Long id);
 

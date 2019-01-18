@@ -23,9 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- * REST Controller for {@link com.ikoval.libman.server.domain.Book} entity
+ * REST Controller for {@link Book} entity
  *
- * @author Ivan Kovalev
  */
 
 
@@ -39,43 +38,29 @@ public class BookRestController {
     private MyConversionService conversionService;
 
     /**
-     * Retrieved books with pagination and sorting
+     * Return a {@link MyPageResponse} of {@link BookDto} matching given {@link MyPageRequest}
+     * and {@link FilterCriteria} if not {@literal null}.
      *
-     * @param myPageRequest must not be {@literal null}
-     * @return response satisfying by given {@code myPageRequest}
+     * @param myPageRequest must not be {@literal null}.
+     * @return response satisfying by given {@code myPageRequest}.
+     * @throws BadRequestException when myPageRequest is {@literal null}.
      */
 
     @PostMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
-    public MyPageResponse<BookDto> findBooksByPageRequest(@RequestBody MyPageRequest myPageRequest) {
+    public MyPageResponse<BookDto> findBooksByPageRequest(@RequestBody MyPageRequest myPageRequest) throws BadRequestException {
         PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
-        Page<Book> pageResponse = bookService.findAll(pageRequest);
-        return MyPageResponseConverter.convert(pageResponse);
-    }
-
-    /**
-     * Retrieved books with pagination, sorting and filtering
-     *
-     * @param myPageRequest must not be {@literal null}
-     * @return response satisfying by given {@code myPageRequest}
-     * @throws BadRequestException if {@code filter} is null
-     */
-
-    @PostMapping(value = "/books/filter", produces = MediaType.APPLICATION_JSON_VALUE)
-    public MyPageResponse<BookDto> findBookByPageRequestWithFilter(@RequestBody MyPageRequest myPageRequest) throws BadRequestException {
-        PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
-        FilterCriteria filter = myPageRequest.getFilter();
-        if(filter == null) throw new BadRequestException("Filter must not be null");
-        Specification<Book> spec = new BookSpecification(filter);
+        FilterCriteria filterCriteria = myPageRequest.getFilter();
+        Specification<Book> spec = filterCriteria != null ? new BookSpecification(filterCriteria) : null;
         Page pageResponse = bookService.findAll(spec,pageRequest);
         return MyPageResponseConverter.convert(pageResponse);
     }
 
     /**
-     * Retrieved book by given id
+     * Retrieved book by given id.
      *
-     * @param id must not be {@literal null}
-     * @return BookDto with given id
-     * @throws BadRequestException in case when book wasn't found
+     * @param id must not be {@literal null}.
+     * @return BookDto with given id.
+     * @throws BadRequestException in case when book wasn't found.
      */
 
     @GetMapping(value = "/book/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -84,10 +69,10 @@ public class BookRestController {
     }
 
     /**
-     * Delete book by given {@code id}
+     * Delete book by given {@code id}.
      *
-     * @param id must not be {@literal null}
-     * @throws BadRequestException in case when book wasn't found
+     * @param id must not be {@literal null}.
+     * @throws BadRequestException in case when book wasn't found.
      */
 
     @DeleteMapping(value = "/book/delete")
@@ -98,9 +83,9 @@ public class BookRestController {
     }
 
     /**
-     * Saves book
+     * Saves book.
      *
-     * @param bookDto must not be {@literal} null
+     * @param bookDto must not be {@literal} null.
      */
 
     @PostMapping(value = "/book/save", consumes = MediaType.APPLICATION_JSON_VALUE)

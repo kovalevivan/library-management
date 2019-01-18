@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 /**
- * Validates parameters and retrieves from database
+ * Validates parameters and retrieves books from database
  *
  */
 
@@ -22,16 +22,23 @@ public class BookService {
 
     private BookRepository bookRepository;
 
-    public Page<Book> findAll(PageRequest pageRequest) {
-        return bookRepository.findAll(pageRequest);
-    }
 
-    public Page<Book> findAll(Specification<Book> specification, PageRequest pageRequest) {
+    /**
+     * Retrieves a {@link Page} of {@link Book} matching the given {@link Specification}
+     *
+     * @param specification can be {@literal null}.
+     * @param pageRequest must not be {@literal null}.
+     * @return never {@literal null}.
+     * @throws BadRequestException when pageRequest is null.
+     */
+
+    public Page<Book> findAll(Specification<Book> specification, PageRequest pageRequest) throws BadRequestException {
+        if(pageRequest == null) throw new BadRequestException("Request must not be null");
         return bookRepository.findAll(specification,pageRequest);
     }
 
     /**
-     * Retrieves book by it id.
+     * Retrieves a {@link Book} by it id.
      *
      * @param id must not be {@literal null}.
      * @return Book with the given id.
@@ -48,7 +55,7 @@ public class BookService {
      *
      * @param book must not be {@literal null}.
      * @return the saved book will never be {@literal null}.
-     * @throws IllegalArgumentException in case the given {@code book} is {@literal null}
+     * @throws IllegalArgumentException in case the given book is {@literal null}
      */
 
     public Book save(Book book) throws IllegalArgumentException {
@@ -60,7 +67,7 @@ public class BookService {
      * Deletes book by it id.
      *
      * @param id must not be {@literal null}.
-     * @throws IllegalArgumentException in case the given {@code id} is {@literal null}
+     * @throws IllegalArgumentException in case the given id is {@literal null}
      */
 
     public void delete(Long id) throws IllegalArgumentException {

@@ -59,11 +59,7 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
     }
 
     public void refresh() {
-        if(myPageRequest.getFilter() == null) {
-            server.findAllBook(myPageRequest, callback);
-        } else {
-            server.findAllBookWithFilter(myPageRequest,callback);
-        }
+        server.findAllBook(myPageRequest,callback);
     }
 
     public void setSorting(final String property, final String direction) {
