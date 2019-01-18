@@ -12,9 +12,8 @@ public class MyPageRequestConverter {
     private final static String DEFAULT_PROPERTY = "id";
 
     /**
-     * Convert {@link com.ikoval.libman.shared.dto.MyPageRequest}
-     * to {@link org.springframework.data.domain.PageRequest}.
-     * Default values are used when fields of {@link com.ikoval.libman.shared.dto.MyPageRequest} equals null
+     * Convert {@link MyPageRequest} to {@link PageRequest}.
+     * Default values are used when fields of {@link MyPageRequest} equals null
      *
      * @param request must not be {@literal null}.
      * @return instance of org.springframework.data.domain.PageRequest

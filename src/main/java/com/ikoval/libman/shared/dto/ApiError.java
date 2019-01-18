@@ -2,42 +2,44 @@ package com.ikoval.libman.shared.dto;
 
 import org.springframework.http.HttpStatus;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class ApiError {
 
-    private String status;
-    private String timestamp;
+    private HttpStatus status;
     private String message;
-    private String debugMessage;
+    private List<String> errors;
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
+    public ApiError(HttpStatus status, String message, List<String> errors) {
+        super();
         this.status = status;
+        this.message = message;
+        this.errors = errors;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public ApiError(HttpStatus status, String message, String error) {
+        super();
+        this.status = status;
+        this.message = message;
+        errors = Collections.singletonList(error);
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public ApiError(HttpStatus status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public HttpStatus getStatus() {
+        return status;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getDebugMessage() {
-        return debugMessage;
-    }
-
-    public void setDebugMessage(String debugMessage) {
-        this.debugMessage = debugMessage;
+    public List<String> getErrors() {
+        return errors;
     }
 }

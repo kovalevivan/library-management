@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations= "classpath:application-test.properties")
-public class BookRepositoryTest {
+public class BookRepositoryIT {
 
     @Autowired
     private BookRepository repository;
@@ -73,7 +73,7 @@ public class BookRepositoryTest {
 
     @Test
     public void shouldFindAllByPageRequest() {
-        Page<Book> pageResponse = repository.findAll(PageRequest.of(0,10));
+        Page<Book> pageResponse = repository.findAll(null,PageRequest.of(0,10));
 
         List<Book> books = pageResponse.getContent();
 

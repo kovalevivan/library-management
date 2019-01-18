@@ -4,6 +4,7 @@ import com.ikoval.libman.server.domain.Author;
 import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.domain.BookGenre;
 import com.ikoval.libman.server.exception.BadRequestException;
+import com.ikoval.libman.server.exception.BookNotFoundException;
 import com.ikoval.libman.server.filter.BookSpecification;
 import com.ikoval.libman.server.repository.BookRepository;
 import com.ikoval.libman.shared.FilterCriteria;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.validation.ConstraintViolationException;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,10 +41,6 @@ public class BookServiceTest {
 
     private Book book;
 
-    private PageRequest pageRequest;
-
-    private Page<Book> page;
-
     @Before
     public void setUp() {
         book = new Book();
@@ -58,39 +56,60 @@ public class BookServiceTest {
         book.setYearOfPublishing(2018);
         book.setPages(200);
         book.setAddedDate(new Date(new java.util.Date().getTime()));
-        pageRequest = PageRequest.of(0,1);
-        page = new PageImpl<>(Collections.singletonList(book),pageRequest,1);
 
     }
 
     @Test
-    public void shouldSaveBook() throws BadRequestException {
-
-
+    public void shouldSaveBook()  {
         when(bookRepository.save(book)).thenReturn(book);
-
         Book responseBook = bookService.save(book);
-
         Assert.assertEquals(responseBook,book);
     }
 
-    @Test
-    public void shouldFindAllByPageRequest() {
-/*        when(bookRepository.findAll(pageRequest)).thenReturn(page);
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenSaveNullBook() {
+        bookService.save(null);
+    }
 
-        Page<Book> response = bookService.findAll(pageRequest);
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenDeleteBookWithNullId() {
+        bookService.delete(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenFindByIdWithNullId() throws BookNotFoundException {
+        bookService.findById(null);
+    }
+
+    @Test(expected = BadRequestException.class)
+    public void shouldThrowExceptionWhenFindAllByNullValue() throws BadRequestException {
+        bookService.findAll(null,null);
+    }
+
+
+    @Test
+    public void shouldFindAllByPageRequest() throws BadRequestException {
+
+        PageRequest pageRequest = PageRequest.of(0,1);
+        Page<Book> page = new PageImpl<>(Collections.singletonList(book),pageRequest,1);
+
+        when(bookRepository.findAll(null,pageRequest)).thenReturn(page);
+
+        Page<Book> response = bookService.findAll(null,pageRequest);
 
         Assert.assertEquals(response.isLast(),page.isLast());
         Assert.assertEquals(response.getTotalElements(),page.getTotalElements());
-        Assert.assertEquals(response.getContent(),page.getContent());*/
+        Assert.assertEquals(response.getContent(),page.getContent());
     }
 
     @Test
-    public void shouldFindAllByPageRequestWithFiltering() {
-/*        FilterCriteria filterCriteria = new FilterCriteria();
+    public void shouldFindAllByPageRequestWithFiltering() throws BadRequestException {
+        FilterCriteria filterCriteria = new FilterCriteria();
         filterCriteria.setBookTitle(book.getTitle());
         filterCriteria.setGenre("Genre1");
         filterCriteria.setAuthorName("Author2");
+        PageRequest pageRequest = PageRequest.of(0,1);
+        Page<Book> page = new PageImpl<>(Collections.singletonList(book),pageRequest,1);
         Specification<Book> spec = new BookSpecification(filterCriteria);
 
         when(bookRepository.findAll(spec,pageRequest)).thenReturn(page);
@@ -99,7 +118,7 @@ public class BookServiceTest {
 
         Assert.assertEquals(response.isLast(),page.isLast());
         Assert.assertEquals(response.getTotalElements(),page.getTotalElements());
-        Assert.assertEquals(response.getContent(),page.getContent());*/
+        Assert.assertEquals(response.getContent(),page.getContent());
     }
 
 }

@@ -14,17 +14,14 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 public interface RestLibraryManagementClient extends LibraryManagementClient, RestService {
 
-    @Override
     @POST
     @Path("/api/book/save")
     void saveBook(BookDto bookDto, MethodCallback callback);
 
-    @Override
     @DELETE
     @Path("/api/book/delete")
     void deleteBook(@QueryParam("id") Long id, MethodCallback callback);
 
-    @Override
     @POST
     @Path("/api/books")
     void findAllBook(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);

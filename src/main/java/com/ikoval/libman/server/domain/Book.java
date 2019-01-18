@@ -3,6 +3,8 @@ package com.ikoval.libman.server.domain;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
@@ -13,9 +15,11 @@ public class Book {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @NotNull
     private String title;
     private String publisher;
     @Column(name = "year")
+    @Positive
     private Integer yearOfPublishing;
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "jnd_genre_book",
@@ -26,7 +30,9 @@ public class Book {
     @JoinTable(name = "jnd_author_book",
             joinColumns = @JoinColumn(name = "author_fk"),
             inverseJoinColumns = @JoinColumn(name = "book_fk"))
+    @NotNull
     private List<Author> authors;
+    @Positive
     private Integer pages;
     @Column(name = "added")
     private Date addedDate;

@@ -7,6 +7,5 @@ public interface AuthorRepository extends CrudRepository<Author, Long> {
 
     Author findByFullName(String fullName);
 
-    Author save(Author author);
 
 }

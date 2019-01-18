@@ -1,6 +1,6 @@
 package com.ikoval.libman.server.repository;
 
-import com.ikoval.libman.server.domain.Author;
+import com.ikoval.libman.server.domain.BookGenre;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,19 +12,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations= "classpath:application-test.properties")
-public class AuthorRepositoryTest {
+public class BookGenreRepositoryIT {
 
     @Autowired
-    AuthorRepository authorRepository;
+    BookGenreRepository repository;
 
     @Test
     public void shouldSaveAndFindByName() {
-        Author author = new Author("Author234");
+        BookGenre bookGenre = new BookGenre("Genre123");
 
-        authorRepository.save(author);
+        repository.save(bookGenre);
 
-        Author response = authorRepository.findByFullName(author.getFullName());
+        BookGenre response = repository.findByName(bookGenre.getName());
 
-        Assert.assertEquals(author,response);
+        Assert.assertEquals(bookGenre,response);
     }
 }

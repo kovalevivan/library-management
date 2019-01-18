@@ -2,18 +2,22 @@ package com.ikoval.libman.shared.dto;
 
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 public class BookDto {
+
 
     private Long id;
     @NotNull
     private String title;
     private String publisher;
+    @Positive
     private Integer yearOfPublishing;
     private String genres;
     @NotNull @Size(min = 2)
     private String authors;
+    @Positive
     private Integer pages;
     private String addedDate;
 

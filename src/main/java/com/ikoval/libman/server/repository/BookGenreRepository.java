@@ -8,7 +8,6 @@ public interface BookGenreRepository extends CrudRepository<BookGenre,Long> {
 
      BookGenre findByName(String name);
 
-     BookGenre save(BookGenre bookGenre);
 
 
 }

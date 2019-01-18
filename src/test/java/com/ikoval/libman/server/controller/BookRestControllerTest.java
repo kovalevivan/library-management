@@ -5,9 +5,9 @@ import com.ikoval.libman.server.converter.MyPageRequestConverter;
 import com.ikoval.libman.server.domain.Author;
 import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.domain.BookGenre;
+import com.ikoval.libman.server.exception.BookNotFoundException;
 import com.ikoval.libman.server.filter.BookSpecification;
 import com.ikoval.libman.server.service.BookService;
-import com.ikoval.libman.server.service.MyConversionService;
 import com.ikoval.libman.shared.FilterCriteria;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.shared.dto.MyPageRequest;
@@ -53,21 +53,9 @@ public class BookRestControllerTest {
     @MockBean
     private BookService bookService;
 
-    @MockBean
-    private MyConversionService conversionService;
-
     private Book book;
 
     private BookDto bookDto;
-
-    private MyPageRequest myPageRequest;
-
-    private PageRequest pageRequest;
-
-    private Page pageResponse;
-
-    private FilterCriteria filterCriteria;
-
 
 
     @Before
@@ -98,21 +86,6 @@ public class BookRestControllerTest {
         bookDto.setPages(book.getPages());
         bookDto.setAddedDate(book.getAddedDate().toString());
 
-        myPageRequest = new MyPageRequest();
-        myPageRequest.setPage(0);
-        myPageRequest.setSize(1);
-        myPageRequest.setProperty("id");
-        myPageRequest.setDirection("desc");
-
-        pageRequest = MyPageRequestConverter.convert(myPageRequest);
-
-        pageResponse = new PageImpl<>(Collections.singletonList(book),pageRequest,1);
-
-        filterCriteria = new FilterCriteria();
-        filterCriteria.setBookTitle(book.getTitle());
-        filterCriteria.setGenre("Genre1");
-        filterCriteria.setAuthorName("Author2");
-        myPageRequest.setFilter(filterCriteria);
 
     }
 
@@ -126,24 +99,50 @@ public class BookRestControllerTest {
 
     @Test
     public void testFindBookByPageRequest() throws Exception {
-/*        when(bookService.findAll(pageRequest)).thenReturn(pageResponse);
+
+        MyPageRequest myPageRequest = new MyPageRequest();
+        myPageRequest.setPage(0);
+        myPageRequest.setSize(1);
+        myPageRequest.setProperty("id");
+        myPageRequest.setDirection("desc");
+
+        PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
+
+        Page<Book> pageResponse = new PageImpl<>(Collections.singletonList(book),pageRequest,1);
+
+        when(bookService.findAll(null,pageRequest)).thenReturn(pageResponse);
         mockMvc.perform(post("/libman/api/books")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(asJsonString(myPageRequest)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.content",isA(List.class)));*/
+                .andExpect(jsonPath("$.content",isA(List.class)));
     }
 
     @Test
     public void testFindBookByPageRequestWithFiltering() throws Exception {
 
+        MyPageRequest myPageRequest = new MyPageRequest();
+        myPageRequest.setPage(0);
+        myPageRequest.setSize(1);
+        myPageRequest.setProperty("id");
+        myPageRequest.setDirection("desc");
+
+        PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
+
+        Page<Book> pageResponse = new PageImpl<>(Collections.singletonList(book),pageRequest,1);
+
+        FilterCriteria filterCriteria = new FilterCriteria();
+        filterCriteria.setBookTitle(book.getTitle());
+        filterCriteria.setGenre("Genre1");
+        filterCriteria.setAuthorName("Author2");
+        myPageRequest.setFilter(filterCriteria);
 
         Specification<Book> spec = new BookSpecification(filterCriteria);
 
         when(bookService.findAll(spec,pageRequest)).thenReturn(pageResponse);
 
-        mockMvc.perform(post("/libman/api/books/filter")
+        mockMvc.perform(post("/libman/api/books")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(asJsonString(myPageRequest)))
                 .andExpect(status().isOk())
@@ -158,6 +157,12 @@ public class BookRestControllerTest {
                 .andExpect(jsonPath("$.content[0].addedDate",is(bookDto.getAddedDate())))
                 .andExpect(jsonPath("$.totalElements",is((int) pageResponse.getTotalElements())))
                 .andExpect(jsonPath("$.last",is(pageResponse.isLast())));
+    }
+
+    @Test
+    public void testFindBookByPageRequestError() throws Exception {
+        mockMvc.perform(post("/libman/api/books").content(""))
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -177,14 +182,19 @@ public class BookRestControllerTest {
     }
 
     @Test
-    public void testWrongBookById() {
-
+    public void testWrongBookById() throws Exception {
+        final String message = "Book not found";
+        when(bookService.findById(100L)).thenThrow(new BookNotFoundException(message));
+        mockMvc.perform(get("/libman/api/book/100"))
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
-    public void testDeleteBook() throws Exception {
-        mockMvc.perform(delete("/libman/api/book/delete?id=" + bookDto.getId()))
-                .andExpect(status().isOk());
+    public void testDeleteBookWithWrongId() throws Exception {
+        final String message = "Book not found";
+        when(bookService.findById(100L)).thenThrow(new BookNotFoundException(message));
+        mockMvc.perform(delete("/libman/api/book/delete?id=100"))
+                .andExpect(status().is4xxClientError());
     }
 
 
@@ -195,6 +205,52 @@ public class BookRestControllerTest {
                 .content(asJsonString(bookDto)))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void saveBookWithNullTitle() throws Exception {
+        BookDto newBookDto = bookDto;
+        bookDto.setTitle(null);
+
+        mockMvc.perform(post("/libman/api/book/save")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(newBookDto)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void saveBookWithNullAuthor() throws Exception {
+        BookDto newBookDto = bookDto;
+        bookDto.setAuthors(null);
+
+        mockMvc.perform(post("/libman/api/book/save")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(newBookDto)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void saveBookWithNegativeYear() throws Exception {
+        BookDto newBookDto = bookDto;
+        bookDto.setYearOfPublishing(-100);
+
+        mockMvc.perform(post("/libman/api/book/save")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(newBookDto)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void saveBookWithNegativePages() throws Exception {
+        BookDto newBookDto = bookDto;
+        bookDto.setPages(-100);
+
+        mockMvc.perform(post("/libman/api/book/save")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(newBookDto)))
+                .andExpect(status().is4xxClientError());
+    }
+
+
 
 
 
