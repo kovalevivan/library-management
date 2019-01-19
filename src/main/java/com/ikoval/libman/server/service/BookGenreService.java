@@ -35,9 +35,10 @@ public class BookGenreService {
         String[] genres = string.split(",");
         List<BookGenre> list = new ArrayList<>();
         for(String s : genres) {
-            BookGenre genre = bookGenreRepository.findByName(s);
+            String genreName = s.trim();
+            BookGenre genre = bookGenreRepository.findByName(genreName);
             if(genre == null) {
-                genre = new BookGenre(s);
+                genre = new BookGenre(genreName);
                 save(genre);
             }
             list.add(genre);

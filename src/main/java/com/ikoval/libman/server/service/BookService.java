@@ -9,9 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 /**
@@ -55,7 +53,7 @@ public class BookService {
     }
 
     /**
-     * Validates and saves given book.
+     * Saves given book.
      *
      * @param book must not be {@literal null}.
      * @return the saved book will never be {@literal null}.

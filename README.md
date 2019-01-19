@@ -1,10 +1,14 @@
 # Library Management Sample Application
+## Presentation
+
+[See the presentation here](https://docs.google.com/presentation/d/14zQbTPPNoDg-lROO9TSX-I-optgUjLFZPjHyEdcctGo/edit#slide=id.p)
+
 ## Demo in Heroku
 
-[see demo here](http://ikoval-library-management.herokuapp.com/)
+[See demo here](http://ikoval-library-management.herokuapp.com/)
  
  ```shell
-User: admin
+User:     admin
 Password: admin
 ```
 ## Introduction
@@ -23,11 +27,15 @@ This is a single-page web application with REST API backend. The aim was to try 
   
 ##  What was implemented
 Web application for book management with the following features
-  - Presentation of data on the client in the table
+  - REST API
+  - Presentation of data on the client side in the table
   - Create, Read, Update, Delete options
   - Server side pagination
   - Server side sorting
   - Server side filtering by several parameters
+  - Authorization process
+  - The ability to store user data for login to the database
+
 
 ## Run for Development
 1. Server: Start the WebApp with Spring Boot

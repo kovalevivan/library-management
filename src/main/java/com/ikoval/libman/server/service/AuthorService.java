@@ -13,11 +13,17 @@ import java.util.List;
 @AllArgsConstructor
 public class AuthorService {
 
-    @Autowired
     private AuthorRepository authorRepository;
 
-    public void save(Author author) {
-        authorRepository.save(author);
+    /**
+     * Saves given author
+     *
+     * @param author must not be {@literal null}
+     */
+
+
+    public Author save(Author author) {
+        return authorRepository.save(author);
     }
 
     /**
@@ -32,9 +38,10 @@ public class AuthorService {
         String[] authorsString = string.split(",");
         List<Author> list = new ArrayList<>();
         for(String s : authorsString) {
-            Author author = authorRepository.findByFullName(s);
+            String authorName = s.trim();
+            Author author = authorRepository.findByFullName(authorName);
             if(author == null) {
-                author = new Author(s);
+                author = new Author(authorName);
                 save(author);
             }
             list.add(author);

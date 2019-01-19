@@ -44,9 +44,9 @@ public class BookRestController {
 
     private BookService bookService;
 
-/*    private AuthorService authorService;*/
+    private AuthorService authorService;
 
-/*    private BookGenreService bookGenreService;*/
+    private BookGenreService bookGenreService;
 
     /**
      * Return a {@link MyPageResponse} of {@link BookDto} matching given {@link MyPageRequest}
@@ -179,14 +179,14 @@ public class BookRestController {
         if(bookDto.getPublisher() != null) book.setPublisher(bookDto.getPublisher());
         if(bookDto.getPages() != null) book.setPages(bookDto.getPages());
         if(bookDto.getYearOfPublishing() != null) book.setYearOfPublishing(bookDto.getYearOfPublishing());
-/*        if(bookDto.getAuthors() != null) {
+        if(bookDto.getAuthors() != null) {
             List<Author> authors = authorService.convertToListOfAuthors(bookDto.getAuthors());
             book.setAuthors(authors);
-        }*/
-/*        if(bookDto.getGenres() != null) {
+        }
+        if(bookDto.getGenres() != null) {
             List<BookGenre> genres = bookGenreService.convertToListOfGenres(bookDto.getGenres());
             book.setGenres(genres);
-        }*/
+        }
         return book;
     }
 
