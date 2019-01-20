@@ -1,5 +1,5 @@
 # Library Management Sample Application
-## Presentation
+## Project explanation
 
 [See the presentation here](https://docs.google.com/presentation/d/14zQbTPPNoDg-lROO9TSX-I-optgUjLFZPjHyEdcctGo/edit#slide=id.p)
 
@@ -12,7 +12,7 @@ User:     admin
 Password: admin
 ```
 ## Introduction
-This is a single-page web application with REST API backend. The aim was to try the following frameworks in educational purpose.
+The idea of the project is to try the following frameworks in educational purpose.
 
 - Server
   - Spring Boot
@@ -26,15 +26,13 @@ This is a single-page web application with REST API backend. The aim was to try 
   - Swagger UI
   
 ##  What was implemented
-Web application for book management with the following features
-  - REST API
-  - Presentation of data on the client side in the table
-  - Create, Read, Update, Delete options
-  - Server side pagination
-  - Server side sorting
-  - Server side filtering by several parameters
-  - Authorization process
-  - The ability to store user data for login to the database
+Single-page web application with REST API backend for book management with the following features:
+ - Create, Read, Update, Delete options
+ - Server side pagination
+ - Server side sorting
+ - Server side filtering by several parameters
+ - Security with login form and storing user data in database
+
 
 
 ## Run for Development
