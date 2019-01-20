@@ -5,8 +5,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
-import com.ikoval.libman.client.domain.LibraryManagementClient;
-import com.ikoval.libman.client.domain.RestLibraryManagementClient;
+import com.ikoval.libman.client.domain.BookRestControllerClientInterface;
+import com.ikoval.libman.client.domain.BookRestControllerClient;
 import com.ikoval.libman.shared.FilterCriteria;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.shared.dto.MyPageResponse;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class BookTableModel extends AsyncDataProvider<BookDto> {
 
-    private final LibraryManagementClient server = GWT.create(RestLibraryManagementClient.class);
+    private final BookRestControllerClientInterface server = GWT.create(BookRestControllerClient.class);
 
     private List<BookDto> list;
 
@@ -59,7 +59,7 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
     }
 
     public void refresh() {
-        server.findAllBook(myPageRequest,callback);
+        server.findBooks(myPageRequest,callback);
     }
 
     public void setSorting(final String property, final String direction) {

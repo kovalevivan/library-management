@@ -10,6 +10,7 @@ import com.ikoval.libman.server.filter.BookSpecification;
 import com.ikoval.libman.server.service.AuthorService;
 import com.ikoval.libman.server.service.BookGenreService;
 import com.ikoval.libman.server.service.BookService;
+import com.ikoval.libman.shared.ApplicationEndpoints;
 import com.ikoval.libman.shared.FilterCriteria;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.shared.dto.MyPageResponse;
@@ -38,7 +39,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("libman/api")
+@RequestMapping(ApplicationEndpoints.ROOT_PATH)
 @AllArgsConstructor
 public class BookRestController {
 
@@ -57,7 +58,7 @@ public class BookRestController {
      * @throws BadRequestException when myPageRequest is {@literal null}.
      */
 
-    @PostMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = ApplicationEndpoints.FIND_BOOKS, produces = MediaType.APPLICATION_JSON_VALUE)
     public MyPageResponse<BookDto> findBooks(@RequestBody MyPageRequest myPageRequest) throws BadRequestException {
         PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
         FilterCriteria filterCriteria = myPageRequest.getFilter();
@@ -74,7 +75,7 @@ public class BookRestController {
      * @throws BookNotFoundException in case when entity of {@link Book} wasn't found.
      */
 
-    @GetMapping(value = "/book/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = ApplicationEndpoints.GET_BOOK, produces = MediaType.APPLICATION_JSON_VALUE)
     public BookDto getBook(@PathVariable Long id) throws BookNotFoundException {
         return buildBookDto(bookService.findById(id));
     }
@@ -86,7 +87,7 @@ public class BookRestController {
      * @throws BookNotFoundException in case when entity of {@link Book} wasn't found.
      */
 
-    @DeleteMapping(value = "/book/delete")
+    @DeleteMapping(value = ApplicationEndpoints.DELETE_BOOK)
     @ResponseStatus(HttpStatus.OK)
     public void deleteBook(@RequestParam Long id) throws BookNotFoundException {
         bookService.findById(id);
@@ -100,7 +101,7 @@ public class BookRestController {
      * @throws BadRequestException when book with given id is already exist
      */
 
-    @PostMapping(value = "/book/save", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = ApplicationEndpoints.SAVE_BOOK, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void saveBook(@Valid @RequestBody BookDto bookDto) throws BadRequestException {
         if(bookDto.getId() != null) {
@@ -123,7 +124,7 @@ public class BookRestController {
      * @throws BookNotFoundException in case when there is no {@link Book} with given id
      */
 
-    @PutMapping(value = "/book/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = ApplicationEndpoints.UPDATE_BOOK, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void updateBook(@Valid @RequestBody BookDto bookDto) throws BadRequestException, BookNotFoundException {
         if(bookDto.getId() == null) throw new BadRequestException("Id is undefined");

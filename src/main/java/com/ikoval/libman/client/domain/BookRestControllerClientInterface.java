@@ -7,12 +7,12 @@ import com.ikoval.libman.shared.dto.MyPageRequest;
 import org.fusesource.restygwt.client.MethodCallback;
 
 
-public interface LibraryManagementClient {
+public interface BookRestControllerClientInterface {
 
     void saveBook(BookDto bookDto, MethodCallback callback);
 
     void deleteBook(Long id, MethodCallback callback);
 
-    void findAllBook(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
+    void findBooks(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
 
 }

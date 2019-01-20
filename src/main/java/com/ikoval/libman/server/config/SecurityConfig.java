@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/libman/*").permitAll()
+                .antMatchers("/libman/*","/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -28,6 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
+
+        http.headers().frameOptions().disable();
 
     }
 

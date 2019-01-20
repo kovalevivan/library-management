@@ -1,5 +1,6 @@
 package com.ikoval.libman.client.domain;
 
+import com.ikoval.libman.shared.ApplicationEndpoints;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.shared.dto.MyPageResponse;
 import com.ikoval.libman.shared.dto.MyPageRequest;
@@ -12,18 +13,18 @@ import javax.ws.rs.core.MediaType;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public interface RestLibraryManagementClient extends LibraryManagementClient, RestService {
+public interface BookRestControllerClient extends BookRestControllerClientInterface, RestService {
 
     @POST
-    @Path("/api/book/save")
+    @Path(ApplicationEndpoints.SAVE_BOOK)
     void saveBook(BookDto bookDto, MethodCallback callback);
 
     @DELETE
-    @Path("/api/book/delete")
+    @Path(ApplicationEndpoints.DELETE_BOOK)
     void deleteBook(@QueryParam("id") Long id, MethodCallback callback);
 
     @POST
-    @Path("/api/books")
-    void findAllBook(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
+    @Path(ApplicationEndpoints.FIND_BOOKS)
+    void findBooks(MyPageRequest pageable, MethodCallback<MyPageResponse<BookDto>> callback);
 
 }
