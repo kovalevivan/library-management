@@ -58,7 +58,7 @@ public class BookRestController {
      */
 
     @PostMapping(value = "/books", produces = MediaType.APPLICATION_JSON_VALUE)
-    public MyPageResponse<BookDto> findBooksByPageRequest(@RequestBody MyPageRequest myPageRequest) throws BadRequestException {
+    public MyPageResponse<BookDto> findBooks(@RequestBody MyPageRequest myPageRequest) throws BadRequestException {
         PageRequest pageRequest = MyPageRequestConverter.convert(myPageRequest);
         FilterCriteria filterCriteria = myPageRequest.getFilter();
         Specification<Book> spec = filterCriteria != null ? new BookSpecification(filterCriteria) : null;
@@ -75,7 +75,7 @@ public class BookRestController {
      */
 
     @GetMapping(value = "/book/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookDto getBookById(@PathVariable Long id) throws BookNotFoundException {
+    public BookDto getBook(@PathVariable Long id) throws BookNotFoundException {
         return buildBookDto(bookService.findById(id));
     }
 
@@ -116,7 +116,24 @@ public class BookRestController {
     }
 
     /**
-     * Converts {@link Book} to {@link BookDto}
+     * Finds {@link Book} by id and than update according to {@link BookDto} parameters
+     *
+     * @param bookDto must not be {@literal null}
+     * @throws BadRequestException in case when id of {@link BookDto} is undefined
+     * @throws BookNotFoundException in case when there is no {@link Book} with given id
+     */
+
+    @PutMapping(value = "/book/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public void updateBook(@Valid @RequestBody BookDto bookDto) throws BadRequestException, BookNotFoundException {
+        if(bookDto.getId() == null) throw new BadRequestException("Id is undefined");
+        Book book = bookService.findById(bookDto.getId());
+        Book updatedBook = convertToBook(bookDto,book);
+        bookService.save(updatedBook);
+    }
+
+    /**
+     * Return new instance of {@link BookDto} with parameters matching  given {@link Book}.
      *
      * @param book must not be null
      * @return {@literal null} if input value was {@literal null};
@@ -147,10 +164,10 @@ public class BookRestController {
     }
 
     /**
-     * Converts {@link Page<Book>} to {@link MyPageResponse<BookDto>}
+     * Converts {@link Page<Book>} to {@link MyPageResponse<BookDto>}.
      *
-     * @param page must not be {@literal null}
-     * @return can't be {@literal null}
+     * @param page must not be {@literal null}.
+     * @return can't be {@literal null}.
      */
     private MyPageResponse<BookDto> buildMyPageResponseDto(final Page<Book> page) {
         List<BookDto> bookDtos = page.stream()
@@ -164,15 +181,26 @@ public class BookRestController {
     }
 
     /**
-     *Converts {@link BookDto} into {@link Book}
+     * Return new instance of {@link Book} with parameters matching {@link BookDto}.
      *
-     * @param bookDto must not be {@literal null}
-     * @return {@link Book} corresponding to given {@link BookDto}
+     * @param bookDto must not be {@literal null}.
+     * @return new instance of {@link Book}.
+     */
+
+    private Book convertToBook(BookDto bookDto) {
+        return convertToBook(bookDto,new Book());
+    }
+
+    /**
+     * Converts {@link BookDto} into {@link Book}.
+     *
+     * @param bookDto must not be {@literal null}.
+     * @param book must not be {@literal null}.
+     * @return {@link Book} corresponding to given {@link BookDto}.
      */
 
 
-    private Book convertToBook(BookDto bookDto) {
-        Book book = new Book();
+    private Book convertToBook(BookDto bookDto, Book book) {
         if(bookDto.getId() != null) book.setId(bookDto.getId());
         if(bookDto.getTitle() != null) book.setTitle(bookDto.getTitle());
         if (bookDto.getAddedDate() != null) book.setAddedDate(parseDate(bookDto.getAddedDate()));

@@ -48,13 +48,19 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler (BadRequestException.class)
     public ResponseEntity<Object> handleBadRequestException(Exception ex, WebRequest request) {
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST,"Illegal argument", Collections.singletonList(ex.getMessage()));
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST,"Bad request", Collections.singletonList(ex.getMessage()));
         return handleExceptionInternal(ex,apiError,new HttpHeaders(),apiError.getStatus(),request);
     }
 
     @ExceptionHandler (BookNotFoundException.class)
     public ResponseEntity<Object> handleBookNotFoundException(Exception ex, WebRequest request) {
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST,"Illegal argument", Collections.singletonList(ex.getMessage()));
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST,"Book not found", Collections.singletonList(ex.getMessage()));
+        return handleExceptionInternal(ex,apiError,new HttpHeaders(),apiError.getStatus(),request);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleOtherException(Exception ex, WebRequest request) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST,"Exception", Collections.singletonList(ex.getMessage()));
         return handleExceptionInternal(ex,apiError,new HttpHeaders(),apiError.getStatus(),request);
     }
 
