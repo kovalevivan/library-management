@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS jnd_book_genre ;
 DROP TABLE IF EXISTS user ;
 DROP SEQUENCE IF EXISTS hibernate_sequence;
 
-CREATE SEQUENCE hibernate_sequence START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE hibernate_sequence START WITH 100 INCREMENT BY 1;
 
 CREATE TABLE author (
   id        BIGINT NOT NULL,

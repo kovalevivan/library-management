@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS user (
 CREATE TABLE IF NOT EXISTS hibernate_sequence (
   next_val BIGINT
 );
-INSERT INTO hibernate_sequence VALUES (1);
-INSERT INTO hibernate_sequence VALUES (1);
-INSERT INTO hibernate_sequence VALUES (1);
-INSERT INTO hibernate_sequence VALUES (1);
+INSERT INTO hibernate_sequence VALUES (100);
+INSERT INTO hibernate_sequence VALUES (100);
+INSERT INTO hibernate_sequence VALUES (100);
+INSERT INTO hibernate_sequence VALUES (100);

@@ -2,6 +2,8 @@ package com.ikoval.libman.client.ui;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.SimplePager;
@@ -28,6 +30,9 @@ public class BookTableView extends Composite {
         dataProvider = bookTableModel;
         dataProvider.addDataDisplay(cellTable);
         cellTable.setEmptyTableWidget(new Label("No Data"));
+        cellTable.setAutoHeaderRefreshDisabled(true);
+        cellTable.setAutoFooterRefreshDisabled(true);
+        cellTable.setWidth("100%",true);
         init();
     }
 
@@ -42,6 +47,12 @@ public class BookTableView extends Composite {
         panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
         panel.add(pager);
         initWidget(panel);
+
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
+            }
+        });
     }
 
     private void initTableColumns(final CellTable<BookDto> table){
@@ -49,15 +60,6 @@ public class BookTableView extends Composite {
         table.setWidth("100%");
         table.setAutoHeaderRefreshDisabled(true);
         table.setAutoFooterRefreshDisabled(true);
-
-        //ID
-/*        TextColumn<BookDto> idColumn = new TextColumn<BookDto>() {
-            @Override
-            public String getValue(final BookDto object) { return object.getId().toString(); }
-        };
-        idColumn.setDataStoreName("id");
-        idColumn.setSortable(true);
-        table.addColumn(idColumn,"Id");*/
 
         //Title
         TextColumn<BookDto> titleColumn = new TextColumn<BookDto>() {
@@ -67,6 +69,7 @@ public class BookTableView extends Composite {
         titleColumn.setDataStoreName("title");
         titleColumn.setSortable(true);
         table.addColumn(titleColumn, "Title");
+        table.setColumnWidth(titleColumn,40, Style.Unit.PCT);
 
         //Authors
         TextColumn<BookDto> authorsColumn = new TextColumn<BookDto>() {
@@ -78,6 +81,7 @@ public class BookTableView extends Composite {
         authorsColumn.setDataStoreName("authors");
 /*        authorsColumn.setSortable(true);*/
         table.addColumn(authorsColumn, "Authors");
+        table.setColumnWidth(authorsColumn,25, Style.Unit.PCT);
 
         //Number of pages
         TextColumn<BookDto> numberOfPagesColumn = new TextColumn<BookDto>() {
@@ -86,7 +90,8 @@ public class BookTableView extends Composite {
         };
         numberOfPagesColumn.setSortable(true);
         numberOfPagesColumn.setDataStoreName("pages");
-        table.addColumn(numberOfPagesColumn , "Number of pages");
+        table.addColumn(numberOfPagesColumn , "Pages");
+        table.setColumnWidth(numberOfPagesColumn,8, Style.Unit.PCT);
 
         //Publisher
         TextColumn<BookDto> publisher = new TextColumn<BookDto>() {
@@ -96,6 +101,7 @@ public class BookTableView extends Composite {
         publisher.setDataStoreName("publisher");
         publisher.setSortable(true);
         table.addColumn(publisher , "Publisher");
+        table.setColumnWidth(publisher,15, Style.Unit.PCT);
 
         //Year of publishing
         TextColumn<BookDto> yearOfPublishing = new TextColumn<BookDto>() {
@@ -105,6 +111,7 @@ public class BookTableView extends Composite {
         yearOfPublishing.setDataStoreName("yearOfPublishing");
         yearOfPublishing.setSortable(true);
         table.addColumn(yearOfPublishing , "Year of publication");
+        table.setColumnWidth(yearOfPublishing,10, Style.Unit.PCT);
 
         //Genres
         TextColumn<BookDto> genres = new TextColumn<BookDto>() {
@@ -114,6 +121,7 @@ public class BookTableView extends Composite {
         genres.setDataStoreName("genres");
 /*        genres.setSortable(true);*/
         table.addColumn(genres , "Genres");
+        table.setColumnWidth(genres,15, Style.Unit.PCT);
 
         //Date when book was added to database
         TextColumn<BookDto> addedDate = new TextColumn<BookDto>() {
@@ -123,6 +131,7 @@ public class BookTableView extends Composite {
         addedDate.setSortable(true);
         addedDate.setDataStoreName("addedDate");
         table.addColumn(addedDate , "Updated");
+        table.setColumnWidth(addedDate,13, Style.Unit.PCT);
 
         //Delete button
         Column<BookDto, String> deleteButton = new Column<BookDto, String>(new ButtonCell()) {
@@ -130,6 +139,7 @@ public class BookTableView extends Composite {
             public String getValue(final BookDto object) { return "x"; }
         };
         table.addColumn(deleteButton , "");
+        table.setColumnWidth(deleteButton,50,Style.Unit.PX);
         deleteButton.setFieldUpdater(new FieldUpdater<BookDto, String>() {
             @Override
             public void update(final int index, final BookDto object, final String value) {

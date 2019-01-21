@@ -163,7 +163,7 @@
                     <i18nMessagesBundle>com.ikoval.libman.client.Messages</i18nMessagesBundle>
                     <generateJsInteropExports>true</generateJsInteropExports>
                     <launcherDir>${project.build.directory}/classes/public</launcherDir>
-                    <codeServerPort>4457</codeServerPort>
+                    <codeServerPort>4459</codeServerPort>
                     <style>DETAILED</style>
                 </configuration>
             </plugin>
