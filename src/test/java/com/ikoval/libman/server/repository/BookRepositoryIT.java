@@ -91,13 +91,13 @@ public class BookRepositoryIT {
 
     @Test
     public void shouldFindAllByPageRequestWithSorting() {
-        Page<Book> pageResponseWithSorting = repository.findAll(PageRequest.of(0,16, Sort.Direction.ASC,"yearOfPublishing"));
+        Page<Book> pageResponseWithSorting = repository.findAll(PageRequest.of(0,16, Sort.Direction.ASC,"addedDate"));
         Page<Book> pageResponse = repository.findAll(PageRequest.of(0,16));
 
         List<Book> books = pageResponse.getContent();
         List<Book> booksWithSorting = pageResponseWithSorting.getContent();
 
-        List<Book> expected = books.stream().sorted(Comparator.comparing(Book::getYearOfPublishing)).collect(Collectors.toList());
+        List<Book> expected = books.stream().sorted(Comparator.comparing(Book::getAddedDate)).collect(Collectors.toList());
 
         Assert.assertEquals(expected,booksWithSorting);
 
