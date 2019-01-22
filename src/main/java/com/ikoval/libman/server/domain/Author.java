@@ -12,7 +12,7 @@ public class Author {
     private Long id;
     private String fullName;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
     private List<Book> writtenByAuthor;
 
     public Author() {

@@ -26,7 +26,6 @@
         <gwt.resty.version>2.2.1</gwt.resty.version>
         <mysql.connector.version>8.0.13</mysql.connector.version>
         <swagger.version>2.9.2</swagger.version>
-        <jackson.version>2.9.8</jackson.version>
         <javax.ws.rs.version>2.1.1</javax.ws.rs.version>
     </properties>
 
@@ -104,30 +103,12 @@
             <version>${gwt.resty.version}</version>
         </dependency>
 
-        <!--Other dependencies-->
+        <!--JAX-RS-->
 
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
             <version>${javax.ws.rs.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
 
     </dependencies>

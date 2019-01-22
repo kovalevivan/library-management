@@ -14,7 +14,7 @@ public class BookGenre {
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "genres")
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
     private List<Book> booksOfThisGenre;
 
     public BookGenre() {
