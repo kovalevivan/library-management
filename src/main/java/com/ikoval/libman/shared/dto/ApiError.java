@@ -2,7 +2,6 @@ package com.ikoval.libman.shared.dto;
 
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

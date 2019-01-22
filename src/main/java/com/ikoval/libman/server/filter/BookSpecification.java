@@ -41,11 +41,11 @@ public class BookSpecification implements Specification<Book> {
         }
 
         if(criteria.getGenre() != null) {
-            Predicate curPredicate = cb.equal(root.join("genres").get("name"),
-                    criteria.getGenre());
+            Predicate curPredicate = cb.like(cb.lower(root.join("genres").get("name")),
+                    getLikePattern(criteria.getGenre()));
             predicates.add(curPredicate);
         }
-        return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+        return cb.and(predicates.toArray(new Predicate[0]));
     }
 
     private static String getLikePattern(String search) {

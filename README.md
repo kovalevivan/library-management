@@ -11,31 +11,8 @@
 User:     admin
 Password: admin
 ```
-## Introduction
-The idea of the project is to try the following frameworks for educational purposes:
 
-- Server
-  - Spring Boot
-  - Spring Security
-  - Spring Data
-  - Hibernate
-- Client
-  - GWT
-  - RestyGWT
-- Documentation
-  - Swagger UI
-  
-##  What was implemented
-Single-page book management web application with a REST API backend. The application has the following features:
- - Create, Read, Update, and Delete commands
- - Server-side pagination
- - Server-side sorting
- - Server-side filtering by several parameters
- - Security features: login form and storage of user data in the database
-
-
-
-## Run for Development
+## Run Development Mode
 1. Server: Start the WebApp with Spring Boot
    
 2. Client: Start GWT SuperDev Mode transpiler

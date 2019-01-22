@@ -11,7 +11,6 @@ public class MyPageRequest {
     private final static String DEFAULT_DIRECTION = "ASC";
     private final static String DEFAULT_PROPERTY = "id";
 
-
     private Integer start;
     private Integer page = DEFAULT_PAGE;
     private Integer size = DEFAULT_SIZE;

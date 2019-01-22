@@ -1,7 +1,5 @@
 package com.ikoval.libman.server.domain;
 
-import lombok.Data;
-
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,7 +7,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "genre")
-@Data
 public class BookGenre {
 
     @Id

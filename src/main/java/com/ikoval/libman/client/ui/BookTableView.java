@@ -173,6 +173,10 @@ public class BookTableView extends Composite {
         pager.setPageSize(DEFAULT_PAGE_SIZE);
     }
 
+    private void refresh() {
+
+    }
+
 }
 
 

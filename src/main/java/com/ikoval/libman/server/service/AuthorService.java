@@ -2,18 +2,19 @@ package com.ikoval.libman.server.service;
 
 import com.ikoval.libman.server.domain.Author;
 import com.ikoval.libman.server.repository.AuthorRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service(value = "authorService")
-@AllArgsConstructor
+@Service
 public class AuthorService {
 
     private AuthorRepository authorRepository;
+
+    public AuthorService(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
 
     /**
      * Saves given author

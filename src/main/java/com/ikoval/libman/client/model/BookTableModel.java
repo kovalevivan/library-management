@@ -109,7 +109,6 @@ public class BookTableModel extends AsyncDataProvider<BookDto> {
 
             @Override
             public void onSuccess(final Method method, final Object response) {
-                list.remove(bookDto);
                 refresh();
                 Window.alert("Book was successfully deleted");
             }

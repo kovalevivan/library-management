@@ -15,7 +15,6 @@ import com.ikoval.libman.shared.FilterCriteria;
 import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.shared.dto.MyPageResponse;
 import com.ikoval.libman.shared.dto.MyPageRequest;
-import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -38,7 +37,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(ApplicationEndpoints.ROOT_PATH)
-@AllArgsConstructor
 public class BookRestController {
 
     private BookService bookService;
@@ -46,6 +44,12 @@ public class BookRestController {
     private AuthorService authorService;
 
     private BookGenreService bookGenreService;
+
+    public BookRestController(BookService bookService, AuthorService authorService, BookGenreService bookGenreService) {
+        this.bookService = bookService;
+        this.authorService = authorService;
+        this.bookGenreService = bookGenreService;
+    }
 
     /**
      * Return a {@link MyPageResponse} of {@link BookDto} matching the given {@link MyPageRequest}
@@ -170,7 +174,7 @@ public class BookRestController {
      */
     private MyPageResponse<BookDto> buildMyPageResponseDto(final Page<Book> page) {
         List<BookDto> bookDtos = page.stream()
-                .map(entity -> buildBookDto(entity))
+                .map(this::buildBookDto)
                 .collect(Collectors.toList());
         MyPageResponse<BookDto> response = new MyPageResponse<>();
         response.setContent(bookDtos);

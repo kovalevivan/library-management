@@ -2,21 +2,18 @@ package com.ikoval.libman.server.service;
 
 import com.ikoval.libman.server.domain.BookGenre;
 import com.ikoval.libman.server.repository.BookGenreRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service(value = "bookGenreService")
-@AllArgsConstructor
+@Service
 public class BookGenreService {
 
-    @Autowired
     private BookGenreRepository bookGenreRepository;
 
-    public BookGenreService() {
+    public BookGenreService(BookGenreRepository bookGenreRepository) {
+        this.bookGenreRepository = bookGenreRepository;
     }
 
     public void save(BookGenre bookGenre) {

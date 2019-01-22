@@ -4,7 +4,6 @@ import com.ikoval.libman.server.domain.Book;
 import com.ikoval.libman.server.exception.BadRequestException;
 import com.ikoval.libman.server.exception.BookNotFoundException;
 import com.ikoval.libman.server.repository.BookRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -17,12 +16,14 @@ import java.util.Optional;
  *
  */
 
-@Service(value = "bookService")
-@AllArgsConstructor
+@Service
 public class BookService {
 
     private BookRepository bookRepository;
 
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     /**
      * Retrieve a {@link Page} of the {@link Book} matching the given {@link Specification}
