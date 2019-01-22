@@ -1,9 +1,9 @@
 # Library Management Sample Application
-## Project explanation
+## Project Explanation
 
 [See the presentation here](https://docs.google.com/presentation/d/14zQbTPPNoDg-lROO9TSX-I-optgUjLFZPjHyEdcctGo/edit#slide=id.p)
 
-## Demo in Heroku
+## Demo on Heroku
 
 [See demo here](http://ikoval-library-management.herokuapp.com/)
  
@@ -12,7 +12,7 @@ User:     admin
 Password: admin
 ```
 ## Introduction
-The idea of the project is to try the following frameworks in educational purpose.
+The idea of the project is to try the following frameworks for educational purposes:
 
 - Server
   - Spring Boot
@@ -26,12 +26,12 @@ The idea of the project is to try the following frameworks in educational purpos
   - Swagger UI
   
 ##  What was implemented
-Single-page web application with REST API backend for book management with the following features:
- - Create, Read, Update, Delete options
- - Server side pagination
- - Server side sorting
- - Server side filtering by several parameters
- - Security with login form and storing user data in database
+Single-page book management web application with a REST API backend. The application has the following features:
+ - Create, Read, Update, and Delete commands
+ - Server-side pagination
+ - Server-side sorting
+ - Server-side filtering by several parameters
+ - Security features: login form and storage of user data in the database
 
 
 
@@ -42,9 +42,9 @@ Single-page web application with REST API backend for book management with the f
  ```shell
 mvn gwt:run-codeserver
 ```
-3. Go to the application URL with a web browser:
+3. Go to the application URL using a web browser:
  ```http
 http://localhost:8080/
 ```
 ## Database configuration
-In its default configuration, Library Management uses an in-memory database (H2) which gets populated at startup with data.
+In its default configuration, Library Management uses an in-memory database (H2). The database gets populated with data at startup.

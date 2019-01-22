@@ -16,8 +16,6 @@ import com.ikoval.libman.shared.dto.BookDto;
 import com.ikoval.libman.shared.dto.MyPageResponse;
 import com.ikoval.libman.shared.dto.MyPageRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -33,7 +31,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * REST Controller for {@link Book} entity
+ * REST Controller for a {@link Book} entity.
  *
  */
 
@@ -50,11 +48,11 @@ public class BookRestController {
     private BookGenreService bookGenreService;
 
     /**
-     * Return a {@link MyPageResponse} of {@link BookDto} matching given {@link MyPageRequest}
+     * Return a {@link MyPageResponse} of {@link BookDto} matching the given {@link MyPageRequest}
      * and {@link FilterCriteria} if not {@literal null}.
      *
      * @param myPageRequest must not be {@literal null}.
-     * @return response satisfying by given {@code myPageRequest}.
+     * @return response satisfying the given {@code myPageRequest}.
      * @throws BadRequestException when myPageRequest is {@literal null}.
      */
 
@@ -68,11 +66,11 @@ public class BookRestController {
     }
 
     /**
-     * Retrieved book by given id.
+     * Retrieve a book by the given id.
      *
      * @param id must not be {@literal null}.
-     * @return BookDto with given id.
-     * @throws BookNotFoundException in case when entity of {@link Book} wasn't found.
+     * @return BookDto with the given id.
+     * @throws BookNotFoundException in case no {@link Book} entity matches the id.
      */
 
     @GetMapping(value = ApplicationEndpoints.GET_BOOK, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -81,10 +79,10 @@ public class BookRestController {
     }
 
     /**
-     * Delete book by given {@code id}.
+     * Delete a book by the given {@code id}.
      *
      * @param id must not be {@literal null}.
-     * @throws BookNotFoundException in case when entity of {@link Book} wasn't found.
+     * @throws BookNotFoundException in case no {@link Book} entity of  matches the id.
      */
 
     @DeleteMapping(value = ApplicationEndpoints.DELETE_BOOK)
@@ -95,10 +93,10 @@ public class BookRestController {
     }
 
     /**
-     * Saves book.
+     * Save a book.
      *
      * @param bookDto must not be {@literal} null.
-     * @throws BadRequestException when book with given id is already exist
+     * @throws BadRequestException when the book with the given id already exists.
      */
 
     @PostMapping(value = ApplicationEndpoints.SAVE_BOOK, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -117,11 +115,11 @@ public class BookRestController {
     }
 
     /**
-     * Finds {@link Book} by id and than update according to {@link BookDto} parameters
+     * Find a {@link Book} by id and than update according to the {@link BookDto} parameters.
      *
-     * @param bookDto must not be {@literal null}
-     * @throws BadRequestException in case when id of {@link BookDto} is undefined
-     * @throws BookNotFoundException in case when there is no {@link Book} with given id
+     * @param bookDto must not be {@literal null}.
+     * @throws BadRequestException in case when id of {@link BookDto} is undefined.
+     * @throws BookNotFoundException in case no {@link Book} entity matches the given id.
      */
 
     @PutMapping(value = ApplicationEndpoints.UPDATE_BOOK, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -134,10 +132,10 @@ public class BookRestController {
     }
 
     /**
-     * Return new instance of {@link BookDto} with parameters matching  given {@link Book}.
+     * Return a new instance of {@link BookDto} with parameters matching the given {@link Book}.
      *
-     * @param book must not be null
-     * @return {@literal null} if input value was {@literal null};
+     * @param book must not be {@literal null}.
+     * @return {@literal null} if input value was {@literal null}; {@link BookDto} object otherwise.
      */
 
     private BookDto buildBookDto(Book book) {
@@ -165,7 +163,7 @@ public class BookRestController {
     }
 
     /**
-     * Converts {@link Page<Book>} to {@link MyPageResponse<BookDto>}.
+     * Convert a {@link Page<Book>} into a {@link MyPageResponse<BookDto>}.
      *
      * @param page must not be {@literal null}.
      * @return can't be {@literal null}.
@@ -182,7 +180,7 @@ public class BookRestController {
     }
 
     /**
-     * Return new instance of {@link Book} with parameters matching {@link BookDto}.
+     * Return a new instance of {@link Book} with parameters matching the given {@link BookDto}.
      *
      * @param bookDto must not be {@literal null}.
      * @return new instance of {@link Book}.
@@ -193,11 +191,11 @@ public class BookRestController {
     }
 
     /**
-     * Converts {@link BookDto} into {@link Book}.
+     * Convert a {@link BookDto} into a {@link Book}.
      *
      * @param bookDto must not be {@literal null}.
      * @param book must not be {@literal null}.
-     * @return {@link Book} corresponding to given {@link BookDto}.
+     * @return {@link Book} corresponding to the given {@link BookDto}.
      */
 
 
@@ -220,7 +218,7 @@ public class BookRestController {
     }
 
     /**
-     * Return {@link Date} matching given string or current time when string is unparseable.
+     * Return a {@link Date} matching the given string if it can be parsed; the current time otherwise.
      *
      */
 

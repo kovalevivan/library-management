@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 /**
- * Validates parameters and retrieves books from database
+ * Validates parameters and retrieves books from the database.
  *
  */
 
@@ -25,11 +25,11 @@ public class BookService {
 
 
     /**
-     * Retrieves a {@link Page} of {@link Book} matching the given {@link Specification}
+     * Retrieve a {@link Page} of the {@link Book} matching the given {@link Specification}
      *
      * @param specification can be {@literal null}.
      * @param pageRequest must not be {@literal null}.
-     * @return never {@literal null}.
+     * @return page, never {@literal null}.
      * @throws BadRequestException when pageRequest is null.
      */
 
@@ -39,7 +39,7 @@ public class BookService {
     }
 
     /**
-     * Retrieves a {@link Book} by it id.
+     * Retrieve a {@link Book} by its id.
      *
      * @param id must not be {@literal null}.
      * @return Book with the given id.
@@ -53,11 +53,11 @@ public class BookService {
     }
 
     /**
-     * Saves given book.
+     * Save the given book.
      *
      * @param book must not be {@literal null}.
      * @return the saved book will never be {@literal null}.
-     * @throws IllegalArgumentException in case the given book is {@literal null}
+     * @throws IllegalArgumentException in case the given book is {@literal null}.
      */
 
     public Book save( Book book) throws IllegalArgumentException {
@@ -66,10 +66,10 @@ public class BookService {
     }
 
     /**
-     * Deletes book by it id.
+     * Delete a book by its id.
      *
      * @param id must not be {@literal null}.
-     * @throws IllegalArgumentException in case the given id is {@literal null}
+     * @throws IllegalArgumentException in case the given id is {@literal null}.
      */
 
     public void delete(Long id) throws IllegalArgumentException {
