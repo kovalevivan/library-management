@@ -1,4 +1,5 @@
-# Library Management Sample Application
+# Library Management Sample Application  [![Build Status](https://travis-ci.org/kovalevivan/library-management.svg?branch=master)](https://travis-ci.org/kovalevivan/library-management)
+
 ## Project Explanation
 
 [See the presentation here](https://docs.google.com/presentation/d/14zQbTPPNoDg-lROO9TSX-I-optgUjLFZPjHyEdcctGo/edit#slide=id.p)
