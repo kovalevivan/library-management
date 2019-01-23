@@ -8,8 +8,8 @@ public class MyPageRequestConverter {
 
     private final static int DEFAULT_SIZE = 10;
     private final static int DEFAULT_PAGE = 0;
-    private final static String DEFAULT_DIRECTION = "ASC";
-    private final static String DEFAULT_PROPERTY = "id";
+    private final static String DEFAULT_DIRECTION = "DESC";
+    private final static String DEFAULT_PROPERTY = "addedDate";
 
     /**
      * Convert {@link MyPageRequest} to {@link PageRequest}.

@@ -20,7 +20,7 @@ public class LibraryManagementClient implements EntryPoint {
   private BookTableView bookTableView = new BookTableView(bookTableModel);
 
   private Button addButton = new Button("Add new");
-  private Button advancedSearch = new Button("Advanced Search");
+  private Button advancedSearch = new Button("Filter");
 
   public void onModuleLoad() {
     addPanel.add(addButton);

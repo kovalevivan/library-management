@@ -20,8 +20,8 @@ public class AdvancedSearchDialogBox extends DialogBox {
     private TextBox genre = new TextBox();
 
     private Button closeButton = new Button("Close");
-    private Button searchButton = new Button("Search");
-    private Button clearButton = new Button("Clear");
+    private Button searchButton = new Button("Apply");
+    private Button clearButton = new Button("Disable");
 
 
 
@@ -72,17 +72,13 @@ public class AdvancedSearchDialogBox extends DialogBox {
                     filter.setGenre(genre.getText());
                 }
                 bookTableModel.setFilter(filter);
-                hide();
+/*                hide();*/
             }
         });
 
         clearButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(final ClickEvent event) {
-                bookTableModel.clearFilter();
-                title.setValue("");
-                author.setValue("");
-                genre.setValue("");
                 bookTableModel.clearFilter();
             }
         });
