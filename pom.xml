@@ -27,6 +27,7 @@
         <mysql.connector.version>8.0.13</mysql.connector.version>
         <swagger.version>2.9.2</swagger.version>
         <javax.ws.rs.version>2.1.1</javax.ws.rs.version>
+        <gwtPolymerVersion>1.9.3.1</gwtPolymerVersion>
     </properties>
 
     <dependencies>
@@ -96,6 +97,13 @@
             <version>${gwt.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.vaadin.polymer</groupId>
+            <artifactId>vaadin-gwt-polymer-elements</artifactId>
+            <version>${gwtPolymerVersion}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- RestyGWT -->
         <dependency>
             <groupId>org.fusesource.restygwt</groupId>
@@ -142,7 +150,7 @@
                     <i18nMessagesBundle>com.ikoval.libman.client.Messages</i18nMessagesBundle>
                     <generateJsInteropExports>true</generateJsInteropExports>
                     <launcherDir>${project.build.directory}/classes/public</launcherDir>
-                    <codeServerPort>4459</codeServerPort>
+                    <codeServerPort>4455</codeServerPort>
                     <style>DETAILED</style>
                 </configuration>
             </plugin>
